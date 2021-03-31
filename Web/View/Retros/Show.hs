@@ -11,27 +11,24 @@ data ShowView = ShowView {
 instance View ShowView where
     html ShowView { .. } =
         [hsx|
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href={RetrosAction}>Retros</a></li>
-                <li class="breadcrumb-item active">Show Retro</li>
+        <nav class="container mx-auto">
+            <ol class="flex">
+                <li class="breadcrumb-item"><a href={RetrosAction}>Back</a></li>
             </ol>
         </nav>
-        <div class="d-flex">
-            <h1>{get #title retro}</h1>
-            <div>
-                <a href={pathTo NewColumnAction} class="btn btn-primary">New Column</a>
+        <main class="container mx-auto">
+            <div class="flex justify-between items-center">
+                <h1 class="text-4xl font-bold">{get #title retro}</h1>
+                <div>
+                    <a href={pathTo NewColumnAction} class="btn btn-primary">New Column</a>
+                </div>
             </div>
-        </div>
-        <div class="container-fluid">
-            <div class="row">
-                {forEach columns $ renderColumn items}
+            <div class="container-fluid">
+                <div class="row">
+                    {forEach columns $ renderColumn items}
+                </div>
             </div>
-        </div>
-        <p>{retro}</p>
-        <code>{columns}</code>
-        <p>{items}</p>
-        <p>{comments}</p>
+        </main>
         |]
 
 renderColumn :: [Item] -> Column ->  Html
