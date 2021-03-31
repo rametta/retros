@@ -17,12 +17,18 @@ instance Controller RetrosController where
 
     action ShowRetroAction { retroId } = autoRefresh do
         retro <- fetch retroId
-            >>= fetchRelated #columns
-                -- >>= collectionFetchRelated #items
 
-        let columns = get #columns retro
-        columnsWithItems <- collectionFetchRelated #items columns
+        columns <- query @Column
+                    |> filterWhere (#retroId, retroId)
+                    |> fetch
 
+        items <- query @Item
+                    |> filterWhere (#retroId, retroId)
+                    |> fetch
+
+        comments <- query @Comment
+                        |> filterWhere (#retroId, retroId)
+                        |> fetch
             
         render ShowView { .. }
 

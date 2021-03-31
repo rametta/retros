@@ -17,6 +17,7 @@ instance View NewView where
 
 renderForm :: Item -> Html
 renderForm item = formFor item [hsx|
+    {(textField #retroId)}
     {(textField #columnId)}
     {(textField #title)}
     {(textField #description)}

@@ -17,8 +17,8 @@ instance View NewView where
 
 renderForm :: Column -> Html
 renderForm column = formFor column [hsx|
-    {(textField #title)}
     {(textField #retroId)}
+    {(textField #title)}
     {(textField #sortOrder)}
     {submitButton}
 |]
