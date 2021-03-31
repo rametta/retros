@@ -13,6 +13,7 @@ instance View EditView where
         </nav>
         <h1>Edit Item</h1>
         {renderForm item}
+        <a href={DeleteItemAction (get #id item)} class="js-delete text-muted">Delete Item</a>
     |]
 
 renderForm :: Item -> Html

@@ -15,10 +15,12 @@ instance Controller ItemsController where
         let item = newRecord
         render NewView { .. }
 
-    action NewColumnItemAction { retroId, columnId } = do
+    action NewColumnItemAction { retroId, columnId, sortOrder } = do
         let item = newRecord
                     |> set #retroId retroId
                     |> set #columnId columnId
+                    |> set #sortOrder sortOrder
+
         render NewView { .. }
 
     action ShowItemAction { itemId } = do
@@ -38,7 +40,7 @@ instance Controller ItemsController where
                 Right item -> do
                     item <- item |> updateRecord
                     setSuccessMessage "Item updated"
-                    redirectTo EditItemAction { .. }
+                    redirectTo $ ShowRetroAction (get #retroId item)
 
     action CreateItemAction = do
         let item = newRecord @Item
@@ -55,7 +57,7 @@ instance Controller ItemsController where
         item <- fetch itemId
         deleteRecord item
         setSuccessMessage "Item deleted"
-        redirectTo ItemsAction
+        redirectTo $ ShowRetroAction (get #retroId item)
 
 buildItem item = item
     |> fill @["columnId","retroId","title","description","sortOrder"]

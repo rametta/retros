@@ -33,7 +33,7 @@ data ColumnsController
 data ItemsController
     = ItemsAction
     | NewItemAction
-    | NewColumnItemAction { retroId :: !(Id Retro), columnId :: !(Id Column) }
+    | NewColumnItemAction { retroId :: !(Id Retro), columnId :: !(Id Column), sortOrder :: Int }
     | ShowItemAction { itemId :: !(Id Item) }
     | CreateItemAction
     | EditItemAction { itemId :: !(Id Item) }

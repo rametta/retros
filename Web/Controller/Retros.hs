@@ -45,7 +45,7 @@ instance Controller RetrosController where
                 Right retro -> do
                     retro <- retro |> updateRecord
                     setSuccessMessage "Retro updated"
-                    redirectTo EditRetroAction { .. }
+                    redirectTo $ ShowRetroAction retroId
 
     action CreateRetroAction = do
         let retro = newRecord @Retro
@@ -56,7 +56,7 @@ instance Controller RetrosController where
                 Right retro -> do
                     retro <- retro |> createRecord
                     setSuccessMessage "Retro created"
-                    redirectTo RetrosAction
+                    redirectTo $ ShowRetroAction (get #id retro)
 
     action DeleteRetroAction { retroId } = do
         retro <- fetch retroId

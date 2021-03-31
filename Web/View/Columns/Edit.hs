@@ -13,6 +13,7 @@ instance View EditView where
         </nav>
         <h1>Edit Column</h1>
         {renderForm column}
+        <a href={DeleteColumnAction (get #id column)} class="js-delete text-muted">Delete Column</a>
     |]
 
 renderForm :: Column -> Html
