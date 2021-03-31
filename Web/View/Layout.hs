@@ -29,7 +29,6 @@ defaultLayout inner = H.docTypeHtml ! A.lang "en" $ [hsx|
 
 stylesheets :: Html
 stylesheets = [hsx|
-        <link rel="stylesheet" href="/vendor/bootstrap.min.css"/>
         <link rel="stylesheet" href="/vendor/flatpickr.min.css"/>
         <link rel="stylesheet" href="/app.css"/>
     |]
