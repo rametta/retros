@@ -26,10 +26,10 @@ instance View IndexView where
         </div>
     |]
 
-
+renderRetro :: Retro -> Html
 renderRetro retro = [hsx|
     <tr>
-        <td>{retro}</td>
+        <td>{get #title retro}</td>
         <td><a href={ShowRetroAction (get #id retro)}>Show</a></td>
         <td><a href={EditRetroAction (get #id retro)} class="text-muted">Edit</a></td>
         <td><a href={DeleteRetroAction (get #id retro)} class="js-delete text-muted">Delete</a></td>

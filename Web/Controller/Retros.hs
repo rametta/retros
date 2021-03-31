@@ -15,8 +15,15 @@ instance Controller RetrosController where
         let retro = newRecord
         render NewView { .. }
 
-    action ShowRetroAction { retroId } = do
+    action ShowRetroAction { retroId } = autoRefresh do
         retro <- fetch retroId
+            >>= fetchRelated #columns
+                -- >>= collectionFetchRelated #items
+
+        let columns = get #columns retro
+        columnsWithItems <- collectionFetchRelated #items columns
+
+            
         render ShowView { .. }
 
     action EditRetroAction { retroId } = do
