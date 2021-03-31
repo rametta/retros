@@ -10,23 +10,24 @@ data ShowView = ShowView {
 
 instance View ShowView where
     html ShowView { .. } =
+        let
+            retroId = get #id retro
+        in
         [hsx|
         <nav class="container mx-auto">
             <ol class="flex">
                 <li class="breadcrumb-item"><a href={RetrosAction}>Back</a></li>
             </ol>
         </nav>
-        <main class="container mx-auto">
+        <main class="container mx-auto h-full flex flex-col">
             <div class="flex justify-between items-center">
                 <h1 class="text-4xl font-bold">{get #title retro}</h1>
                 <div>
-                    <a href={pathTo NewColumnAction} class="btn btn-primary">New Column</a>
+                    <a href={pathTo $ NewRetroColumnAction retroId } class="btn">New Column</a>
                 </div>
             </div>
-            <div class="container-fluid">
-                <div class="row">
-                    {forEach columns $ renderColumn items}
-                </div>
+            <div class="w-full flex h-full overflow-auto">
+                {forEach columns $ renderColumn items}
             </div>
         </main>
         |]
@@ -39,16 +40,22 @@ renderColumn allItems column =
         items = allItems |> filter ((== columnId) . get #columnId)
     in
     [hsx|
-    <div class="col-sm">
-        <h2>{get #title column}</h2>
-        <a href={EditColumnAction columnId} class="btn btn-primary btn-sm">Edit Column</a>
-        <a href={NewColumnItemAction retroId columnId} class="btn btn-info btn-sm">Add New Item</a>
-        {forEach items renderItem}
+    <div style="min-width: 18rem" class="p-2 w-72 mr-3 my-3 rounded bg-gray-200 flex flex-col justify-between">
+        <div>
+            <h2 class="text-2xl">{get #title column}</h2>
+            <a href={EditColumnAction columnId} class="btn">Edit Column</a>
+            <div>
+                {forEach items renderItem}
+            </div>
+        </div>
+        <a href={NewColumnItemAction retroId columnId} class="btn">+ Add another card</a>
     </div>
     |]
 
 renderItem :: Item -> Html
 renderItem item =
     [hsx|
-        <div>{get #title item} <a href={EditItemAction $ get #id item}>Edit Item</a></div>
+        <div class="rounded shadow bg-white p-2 my-2 flex justify-between">
+            {get #title item} <a href={EditItemAction $ get #id item}>Edit</a>
+        </div>
     |]

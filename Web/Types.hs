@@ -22,6 +22,7 @@ data RetrosController
 data ColumnsController
     = ColumnsAction
     | NewColumnAction
+    | NewRetroColumnAction { retroId :: !(Id Retro) }
     | ShowColumnAction { columnId :: !(Id Column) }
     | CreateColumnAction
     | EditColumnAction { columnId :: !(Id Column) }

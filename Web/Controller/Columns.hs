@@ -15,6 +15,11 @@ instance Controller ColumnsController where
         let column = newRecord
         render NewView { .. }
 
+    action NewRetroColumnAction { retroId } = do
+        let column = newRecord
+                        |> set #retroId retroId
+        render NewView { .. }
+
     action ShowColumnAction { columnId } = do
         column <- fetch columnId
         render ShowView { .. }
@@ -32,7 +37,7 @@ instance Controller ColumnsController where
                 Right column -> do
                     column <- column |> updateRecord
                     setSuccessMessage "Column updated"
-                    redirectTo EditColumnAction { .. }
+                    redirectTo $ ShowRetroAction (get #retroId column)
 
     action CreateColumnAction = do
         let column = newRecord @Column
@@ -43,13 +48,13 @@ instance Controller ColumnsController where
                 Right column -> do
                     column <- column |> createRecord
                     setSuccessMessage "Column created"
-                    redirectTo ColumnsAction
+                    redirectTo $ ShowRetroAction (get #retroId column)
 
     action DeleteColumnAction { columnId } = do
         column <- fetch columnId
         deleteRecord column
         setSuccessMessage "Column deleted"
-        redirectTo ColumnsAction
+        redirectTo $ ShowRetroAction (get #retroId column)
 
 buildColumn column = column
     |> fill @["title","retroId","sortOrder"]

@@ -17,10 +17,9 @@ defaultLayout inner = H.docTypeHtml ! A.lang "en" $ [hsx|
     {stylesheets}
     {scripts}
 
-    <title>App</title>
+    <title>Retroz</title>
 </head>
-<body>
-    {renderFlashMessages}
+<body class="flex flex-col h-screen">
     {inner}
 </body>
 |]
