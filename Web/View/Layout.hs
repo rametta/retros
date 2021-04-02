@@ -26,16 +26,12 @@ defaultLayout inner = H.docTypeHtml ! A.lang "en" $ [hsx|
 
 stylesheets :: Html
 stylesheets = [hsx|
-        <link rel="stylesheet" href="/vendor/flatpickr.min.css"/>
         <link rel="stylesheet" href="/app.css"/>
     |]
 
 scripts :: Html
 scripts = [hsx|
         <script id="livereload-script" src="/livereload.js"></script>
-        <script src="/vendor/jquery-3.2.1.slim.min.js"></script>
-        <script src="/vendor/timeago.js"></script>
-        <script src="/vendor/flatpickr.js"></script>
         <script src="/vendor/morphdom-umd.min.js"></script>
         <script src="/vendor/turbolinks.js"></script>
         <script src="/vendor/turbolinksInstantClick.js"></script>
