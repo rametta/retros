@@ -1,25 +1,28 @@
 module Web.View.Columns.Edit where
 import Web.View.Prelude
 
-data EditView = EditView { column :: Column }
+newtype EditView = EditView { column :: Column }
 
 instance View EditView where
     html EditView { .. } = [hsx|
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href={ColumnsAction}>Columns</a></li>
-                <li class="breadcrumb-item active">Edit Column</li>
-            </ol>
-        </nav>
-        <h1>Edit Column</h1>
-        {renderForm column}
-        <a href={DeleteColumnAction (get #id column)} class="js-delete text-muted">Delete Column</a>
+        <main class="container mx-auto p-4">
+            <div class="rounded bg-gray-100 shadow px-3 pt-3 pb-1">
+                <h1 class="text-xl">Edit Column</h1>
+                {renderForm column}
+            </div>
+        </main>
     |]
 
 renderForm :: Column -> Html
 renderForm column = formFor column [hsx|
-    {(textField #retroId)}
-    {(textField #title)}
-    {(textField #sortOrder)}
-    {submitButton}
+    {(hiddenField #retroId)}
+    {(textField #title) {autofocus = True}}
+    {(textField #sortOrder) { fieldLabel = "Position", helpText = "Ex: A position of 0 would be the left most column" }}
+    <div class="flex justify-between">
+        <div class="flex">
+             <button class="mr-2 bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-1 px-2 rounded transition duration-300">Save</button>
+             <a href={ShowRetroAction $ get #retroId column} class="block btn-gray">Cancel</a>
+         </div>
+        <a href={DeleteColumnAction $ get #id column} class="js-delete block bg-red-400 hover:bg-red-500 text-white font-bold py-1 px-2 rounded transition duration-300">Delete Item</a>
+     </div>
 |]

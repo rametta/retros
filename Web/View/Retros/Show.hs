@@ -1,5 +1,6 @@
 module Web.View.Retros.Show where
 import Web.View.Prelude
+import GHC.Base (Semigroup)
 
 data ShowView = ShowView {
     retro :: Retro,
@@ -13,8 +14,9 @@ instance View ShowView where
         let
             retroId = get #id retro
             sortedColumns = columns |> sortOn (get #sortOrder)
+            count = length columns
 
-            viewColumns = case length columns of
+            viewColumns = case count of
                 0 -> [hsx|<div class="w-full p-4 text-center text-gray-600">There are no columns yet. Add some by clicking "New Column"!</div>|]
                 _ -> [hsx|<div class="flex">{forEach sortedColumns $ renderColumn items}</div>|]
         in
@@ -24,7 +26,7 @@ instance View ShowView where
                 <h1 class="text-4xl font-bold">{get #title retro}</h1>
                 <div class="flex flex-wrap">
                     <a href={pathTo $ EditRetroAction retroId } class="btn-gray mr-1 block text-sm">Edit Retro</a>
-                    <a href={pathTo $ NewRetroColumnAction retroId } class="block btn-gray text-sm">New Column</a>
+                    <a href={pathTo $ NewRetroColumnAction retroId count } class="block btn-gray text-sm">New Column</a>
                 </div>
             </div>
             

@@ -15,9 +15,10 @@ instance Controller ColumnsController where
         let column = newRecord
         render NewView { .. }
 
-    action NewRetroColumnAction { retroId } = do
+    action NewRetroColumnAction { retroId, sortOrder } = do
         let column = newRecord
                         |> set #retroId retroId
+                        |> set #sortOrder sortOrder
         render NewView { .. }
 
     action ShowColumnAction { columnId } = do

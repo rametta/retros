@@ -1,13 +1,15 @@
 module Web.View.Items.Edit where
 import Web.View.Prelude
 
-data EditView = EditView { item :: Item }
+newtype EditView = EditView { item :: Item }
 
 instance View EditView where
     html EditView { .. } = [hsx|
         <main class="container mx-auto p-4">
-            <h1 class="text-xl">Edit</h1>
-            {renderForm item}
+            <div class="rounded bg-gray-100 shadow px-3 pt-3 pb-1">
+                <h1 class="text-xl">Edit</h1>
+                {renderForm item}
+            </div>
         </main>
     |]
 

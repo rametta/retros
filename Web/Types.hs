@@ -22,7 +22,7 @@ data RetrosController
 data ColumnsController
     = ColumnsAction
     | NewColumnAction
-    | NewRetroColumnAction { retroId :: !(Id Retro) }
+    | NewRetroColumnAction { retroId :: !(Id Retro), sortOrder :: Int }
     | ShowColumnAction { columnId :: !(Id Column) }
     | CreateColumnAction
     | EditColumnAction { columnId :: !(Id Column) }
