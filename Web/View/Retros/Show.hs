@@ -18,14 +18,20 @@ instance View ShowView where
         in
         [hsx|
         <main class="h-full flex flex-col">
-            <div class="flex justify-between items-center p-2">
-                <h1 class="text-4xl font-bold text-white">{get #title retro}</h1>
+            <nav class="flex justify-between items-center p-2 bg-indigo-600 bg-opacity-60">
+                <div class="flex items-center">
+                    <div>
+                        <a href={pathTo $ RetrosAction} class="mr-2 block text-lg bg-pink-500 hover:bg-pink-400 text-white font-bold py-1 px-2 rounded transition duration-300">Home</a>
+                    </div>
+                    <div class="bg-white bg-opacity-30 rounded py-1 px-3">
+                        <h1 class="text-lg font-bold text-white">{get #title retro}</h1>
+                    </div>
+                </div>
                 <div class="flex flex-wrap">
                     <a href={pathTo $ EditRetroAction retroId} class="mr-1 block text-sm bg-pink-500 hover:bg-pink-400 text-white font-bold py-1 px-2 border-b-4 border-pink-700 hover:border-pink-500 rounded transition duration-300 transform hover:scale-105">Edit Retro</a>
                     <a href={pathTo $ NewRetroColumnAction retroId count} class="block text-sm bg-blue-400 hover:bg-blue-300 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-500 rounded transition duration-300 transform hover:scale-105">New Column</a>
                 </div>
-            </div>
-            
+            </nav>
             <div class="w-full flex h-full overflow-auto">
                 <div class="flex">
                     {forEach sortedColumns $ renderColumn items}

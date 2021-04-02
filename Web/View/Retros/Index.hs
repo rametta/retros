@@ -4,34 +4,28 @@ import Web.View.Prelude
 data IndexView = IndexView { retros :: [Retro] }
 
 instance View IndexView where
-    html IndexView { .. } = [hsx|
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item active"><a href={RetrosAction}>Retros</a></li>
-            </ol>
-        </nav>
-        <h1>Index <a href={pathTo NewRetroAction} class="btn btn-primary ml-4">+ New</a></h1>
-        <div class="table-responsive">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Retro</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>{forEach retros renderRetro}</tbody>
-            </table>
-        </div>
-    |]
+    html IndexView { .. } =
+        let
+            sortedRetros = retros |> sortOn (get #createdAt) |> reverse
+        in
+        [hsx|
+            <main class="container mx-auto h-full flex flex-col mt-5">
+                <div class="mx-3 flex flex-col">
+                    <div class="flex justify-between">
+                        <h1 class="text-2xl text-white font-bold mb-3">Your Retros</h1>
+                        <div>
+                            <a href={pathTo NewRetroAction} class="bg-blue-400 hover:bg-blue-300 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-500 rounded transition duration-300 transform hover:scale-105">New Retro</a>
+                        </div>
+                    </div>
+                    {forEach sortedRetros renderRetro}
+                </div>
+            </main>
+        |]
 
 renderRetro :: Retro -> Html
 renderRetro retro = [hsx|
-    <tr>
-        <td>{get #title retro}</td>
-        <td><a href={ShowRetroAction (get #id retro)}>Show</a></td>
-        <td><a href={EditRetroAction (get #id retro)} class="text-muted">Edit</a></td>
-        <td><a href={DeleteRetroAction (get #id retro)} class="js-delete text-muted">Delete</a></td>
-    </tr>
+    <a href={ShowRetroAction $ get #id retro} class="bg-white flex justify-between bg-opacity-80 hover:bg-opacity-100 transition duration-300 p-3 rounded mb-3">
+        {get #title retro}
+        <span class=" text-gray-500">{date $ get #createdAt retro}</span>
+    </a>
 |]
