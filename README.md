@@ -1,4 +1,4 @@
-# Retro's
+# 🏂🏻 Retro's
 
 A Haskell based web app for conducting team retros.
 
