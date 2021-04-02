@@ -6,7 +6,7 @@ newtype EditView = EditView { column :: Column }
 instance View EditView where
     html EditView { .. } = [hsx|
         <main class="container mx-auto p-4">
-            <div class="rounded bg-gray-100 shadow px-3 pt-3 pb-1">
+            <div class="rounded bg-white bg-opacity-60 shadow px-3 pt-3 pb-1">
                 <h1 class="text-xl">Edit Column</h1>
                 {renderForm column}
             </div>

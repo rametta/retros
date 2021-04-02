@@ -1,22 +1,25 @@
 module Web.View.Retros.New where
 import Web.View.Prelude
 
-data NewView = NewView { retro :: Retro }
+newtype NewView = NewView { retro :: Retro }
 
 instance View NewView where
     html NewView { .. } = [hsx|
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href={RetrosAction}>Retros</a></li>
-                <li class="breadcrumb-item active">New Retro</li>
-            </ol>
-        </nav>
-        <h1>New Retro</h1>
-        {renderForm retro}
+        <main class="container mx-auto p-4">
+            <div class="rounded bg-white bg-opacity-60 shadow px-3 pt-3 pb-1">
+                <h1 class="text-xl">New Retro</h1>
+                {renderForm retro}
+            </div>
+        </main>
     |]
 
 renderForm :: Retro -> Html
 renderForm retro = formFor retro [hsx|
-    {(textField #title)}
-    {submitButton}
+    {(textField #title) {autofocus = True}}
+    <div class="flex justify-between">
+        <div class="flex">
+            <button class="mr-2 bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-1 px-2 rounded transition duration-300">Save</button>
+            <a href={RetrosAction} class="block btn-gray">Cancel</a>
+        </div>
+    </div>
 |]
