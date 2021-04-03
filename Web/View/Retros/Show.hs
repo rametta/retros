@@ -21,7 +21,7 @@ instance View ShowView where
             <nav class="flex justify-between items-center p-2 bg-gray-800">
                 <div class="flex items-center">
                     <div>
-                        <a href={pathTo $ RetrosAction} class="mr-2 block text-lg bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-2 rounded transition duration-300">Home</a>
+                        <a href={pathTo $ RetrosAction} class="mr-2 block text-lg bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-2 rounded transition duration-300">Retros</a>
                     </div>
                     <div class="bg-white bg-opacity-30 rounded py-1 px-3">
                         <h1 class="text-lg font-bold text-white">{get #title retro}</h1>
