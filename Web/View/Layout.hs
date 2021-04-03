@@ -21,6 +21,7 @@ defaultLayout inner = H.docTypeHtml ! A.lang "en" $ [hsx|
 </head>
 <body class="flex flex-col h-screen bg-gradient-to-r from-pink-400 to-purple-500">
     {inner}
+    {modal}
 </body>
 |]
 

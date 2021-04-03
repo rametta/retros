@@ -32,7 +32,7 @@ instance View ShowView where
                     <a href={pathTo $ NewRetroColumnAction retroId count} class="block text-sm bg-blue-400 hover:bg-blue-300 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-500 rounded transition duration-300 transform hover:scale-105">New Column</a>
                 </div>
             </nav>
-            <div class="w-full flex h-full overflow-auto">
+            <div class="w-full flex h-full overflow-x-auto">
                 <div class="flex">
                     {forEach sortedColumns $ renderColumn items}
                     <div style="min-width: 18rem" class="w-72 m-2 rounded">

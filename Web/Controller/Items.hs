@@ -6,6 +6,8 @@ import Web.View.Items.New
 import Web.View.Items.Edit
 import Web.View.Items.Show
 
+import Web.Controller.Retros
+
 instance Controller ItemsController where
     action ItemsAction = do
         items <- query @Item |> fetch
@@ -29,7 +31,8 @@ instance Controller ItemsController where
 
     action EditItemAction { itemId } = do
         item <- fetch itemId
-        render EditView { .. }
+        setModal EditView { .. }
+        jumpToAction $ ShowRetroAction (get #retroId item)
 
     action UpdateItemAction { itemId } = do
         item <- fetch itemId

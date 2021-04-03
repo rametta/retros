@@ -2,16 +2,13 @@ module Web.View.Items.Edit where
 import Web.View.Prelude
 
 newtype EditView = EditView { item :: Item }
-
 instance View EditView where
-    html EditView { .. } = [hsx|
-        <main class="container mx-auto p-4">
-            <div class="rounded bg-white bg-opacity-60 shadow px-3 pt-3 pb-1">
-                <h1 class="text-xl">Edit</h1>
-                {renderForm item}
-            </div>
-        </main>
-    |]
+    html EditView { .. } = renderModal Modal
+        { modalTitle = "Edit"
+        , modalCloseUrl = pathTo $ ShowRetroAction $ get #retroId item
+        , modalFooter = Nothing
+        , modalContent = renderForm item
+        }
 
 renderForm :: Item -> Html
 renderForm item = formFor item [hsx|
