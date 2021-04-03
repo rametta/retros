@@ -7,7 +7,7 @@ import Web.View.Retros.Edit
 import Web.View.Retros.Show
 
 instance Controller RetrosController where
-    action RetrosAction = do
+    action RetrosAction = autoRefresh do
         retros <- query @Retro |> fetch
         render IndexView { .. }
 
