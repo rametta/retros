@@ -5,6 +5,7 @@ import Web.View.Columns.Index
 import Web.View.Columns.New
 import Web.View.Columns.Edit
 import Web.View.Columns.Show
+import Web.Controller.Retros
 
 instance Controller ColumnsController where
     action ColumnsAction = do
@@ -19,7 +20,8 @@ instance Controller ColumnsController where
         let column = newRecord
                         |> set #retroId retroId
                         |> set #sortOrder sortOrder
-        render NewView { .. }
+        setModal NewView { .. }
+        jumpToAction $ ShowRetroAction retroId
 
     action ShowColumnAction { columnId } = do
         column <- fetch columnId
@@ -27,7 +29,8 @@ instance Controller ColumnsController where
 
     action EditColumnAction { columnId } = do
         column <- fetch columnId
-        render EditView { .. }
+        setModal EditView { .. }
+        jumpToAction $ ShowRetroAction $ get #retroId column
 
     action UpdateColumnAction { columnId } = do
         column <- fetch columnId

@@ -4,14 +4,12 @@ import Web.View.Prelude
 newtype NewView = NewView { item :: Item }
 
 instance View NewView where
-    html NewView { .. } = [hsx|
-        <main class="container mx-auto p-4">
-            <div class="rounded bg-white bg-opacity-60 shadow px-3 pt-3 pb-1">
-                <h1 class="text-xl">New</h1>
-                {renderForm item}
-            </div>
-        </main>
-    |]
+    html NewView { .. } = renderModal Modal
+        { modalTitle = "New"
+        , modalCloseUrl = pathTo $ ShowRetroAction $ get #retroId item
+        , modalFooter = Nothing
+        , modalContent = renderForm item
+        }
 
 renderForm :: Item -> Html
 renderForm item = formFor item [hsx|

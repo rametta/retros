@@ -13,7 +13,8 @@ instance Controller RetrosController where
 
     action NewRetroAction = do
         let retro = newRecord
-        render NewView { .. }
+        setModal NewView { .. }
+        jumpToAction RetrosAction
 
     action ShowRetroAction { retroId } = autoRefresh do
         retro <- fetch retroId
@@ -34,7 +35,8 @@ instance Controller RetrosController where
 
     action EditRetroAction { retroId } = do
         retro <- fetch retroId
-        render EditView { .. }
+        setModal EditView { .. }
+        jumpToAction $ ShowRetroAction retroId
 
     action UpdateRetroAction { retroId } = do
         retro <- fetch retroId

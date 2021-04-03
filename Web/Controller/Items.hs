@@ -5,7 +5,6 @@ import Web.View.Items.Index
 import Web.View.Items.New
 import Web.View.Items.Edit
 import Web.View.Items.Show
-
 import Web.Controller.Retros
 
 instance Controller ItemsController where
@@ -23,7 +22,8 @@ instance Controller ItemsController where
                     |> set #columnId columnId
                     |> set #sortOrder sortOrder
 
-        render NewView { .. }
+        setModal NewView { .. }
+        jumpToAction $ ShowRetroAction retroId
 
     action ShowItemAction { itemId } = do
         item <- fetch itemId

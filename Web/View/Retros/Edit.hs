@@ -4,14 +4,12 @@ import Web.View.Prelude
 newtype EditView = EditView { retro :: Retro }
 
 instance View EditView where
-    html EditView { .. } = [hsx|
-        <main class="container mx-auto p-4">
-            <div class="rounded bg-white bg-opacity-60 shadow px-3 pt-3 pb-1">
-                <h1 class="text-xl">Edit Retro</h1>
-                {renderForm retro}
-            </div>
-        </main>
-    |]
+    html EditView { .. } = renderModal Modal
+        { modalTitle = "Edit Retro"
+        , modalCloseUrl = pathTo $ ShowRetroAction $ get #id retro
+        , modalFooter = Nothing
+        , modalContent = renderForm retro
+        }
 
 renderForm :: Retro -> Html
 renderForm retro = formFor retro [hsx|

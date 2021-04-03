@@ -4,14 +4,12 @@ import Web.View.Prelude
 newtype NewView = NewView { retro :: Retro }
 
 instance View NewView where
-    html NewView { .. } = [hsx|
-        <main class="container mx-auto p-4">
-            <div class="rounded bg-white bg-opacity-60 shadow px-3 pt-3 pb-1">
-                <h1 class="text-xl">New Retro</h1>
-                {renderForm retro}
-            </div>
-        </main>
-    |]
+    html NewView { .. } = renderModal Modal
+        { modalTitle = "New Retro"
+        , modalCloseUrl = pathTo RetrosAction
+        , modalFooter = Nothing
+        , modalContent = renderForm retro
+        }
 
 renderForm :: Retro -> Html
 renderForm retro = formFor retro [hsx|
