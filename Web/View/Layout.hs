@@ -17,7 +17,7 @@ defaultLayout inner = H.docTypeHtml ! A.lang "en" $ [hsx|
     {stylesheets}
     {scripts}
 
-    <title>Retroz</title>
+    <title>Retros</title>
 </head>
 <body class="flex flex-col h-screen bg-gray-900">
     {inner}
