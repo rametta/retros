@@ -9,6 +9,7 @@ instance View IndexView where
             sortedRetros = retros |> sortOn (get #createdAt) |> reverse
         in
         [hsx|
+            {renderNavbar mempty mempty}
             <main class="container mx-auto h-full flex flex-col mt-5">
                 <div class="mx-3 flex flex-col">
                     <div class="flex justify-between">

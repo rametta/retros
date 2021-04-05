@@ -6,13 +6,7 @@ import Web.Types
 -- Generator Marker
 instance AutoRoute StaticController
 instance AutoRoute RetrosController
-
-
 instance AutoRoute ColumnsController
-
-
 instance AutoRoute ItemsController
-
-
 instance AutoRoute CommentsController
-
+instance AutoRoute SessionsController

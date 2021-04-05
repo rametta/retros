@@ -31,6 +31,14 @@ CREATE TABLE comments (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
     retro_id UUID NOT NULL
 );
+CREATE TABLE users (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    password_hash TEXT NOT NULL,
+    locked_at TIMESTAMP WITH TIME ZONE DEFAULT NULL,
+    failed_login_attempts INT DEFAULT 0 NOT NULL
+);
 ALTER TABLE columns ADD CONSTRAINT columns_ref_retro_id FOREIGN KEY (retro_id) REFERENCES retros (id) ON DELETE CASCADE;
 ALTER TABLE comments ADD CONSTRAINT comments_ref_item_id FOREIGN KEY (item_id) REFERENCES items (id) ON DELETE CASCADE;
 ALTER TABLE comments ADD CONSTRAINT comments_ref_retro_id FOREIGN KEY (retro_id) REFERENCES retros (id) ON DELETE CASCADE;

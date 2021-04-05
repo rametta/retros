@@ -8,6 +8,8 @@ import Web.View.Columns.Show
 import Web.Controller.Retros
 
 instance Controller ColumnsController where
+    beforeAction = ensureIsUser
+    
     action ColumnsAction = do
         columns <- query @Column |> fetch
         render IndexView { .. }

@@ -47,7 +47,6 @@ metaTags = [hsx|
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta property="og:title" content="Retros"/>
     <meta property="og:type" content="website"/>
-    <meta property="og:url" content="TODO"/>
     <meta property="og:description" content="Retros for people who like Haskell"/>
     {autoRefreshMeta}
 |]

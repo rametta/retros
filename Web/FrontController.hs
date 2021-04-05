@@ -1,6 +1,7 @@
 module Web.FrontController where
 
 import IHP.RouterPrelude
+import IHP.LoginSupport.Middleware
 import Web.Controller.Prelude
 import Web.View.Layout (defaultLayout)
 
@@ -10,10 +11,11 @@ import Web.Controller.Items
 import Web.Controller.Columns
 import Web.Controller.Retros
 import Web.Controller.Static
-
+import Web.Controller.Sessions
 instance FrontController WebApplication where
     controllers = 
         [ startPage WelcomeAction
+        , parseRoute @SessionsController
         -- Generator Marker
         , parseRoute @CommentsController
         , parseRoute @ItemsController
@@ -25,3 +27,4 @@ instance InitControllerContext WebApplication where
     initContext = do
         setLayout defaultLayout
         initAutoRefresh
+        initAuthentication @User

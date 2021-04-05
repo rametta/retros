@@ -8,6 +8,8 @@ import Web.View.Items.Show
 import Web.Controller.Retros
 
 instance Controller ItemsController where
+    beforeAction = ensureIsUser
+    
     action ItemsAction = do
         items <- query @Item |> fetch
         render IndexView { .. }

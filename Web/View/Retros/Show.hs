@@ -15,26 +15,21 @@ instance View ShowView where
             retroId = get #id retro
             sortedColumns = columns |> sortOn (get #sortOrder)
             count = length columns
+            title = [hsx|
+                <div class="bg-gray-700 rounded py-1 px-2">
+                    <h1 class="font-bold text-white">{get #title retro}</h1>
+                </div>
+            |]
+            editBtn = [hsx|<a href={pathTo $ EditRetroAction retroId} class="block bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-2 rounded transition duration-300">Edit Retro</a>|]
+            nav = renderNavbar title editBtn
         in
         [hsx|
-        <main class="h-full flex flex-col">
-            <nav class="flex justify-between items-center p-2 bg-gray-800">
-                <div class="flex items-center">
-                    <div>
-                        <a href={pathTo $ RetrosAction} class="mr-2 block text-lg bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-2 rounded transition duration-300">Retros</a>
-                    </div>
-                    <div class="bg-white bg-opacity-30 rounded py-1 px-3">
-                        <h1 class="text-lg font-bold text-white">{get #title retro}</h1>
-                    </div>
-                </div>
-                <a href={pathTo $ EditRetroAction retroId} class="mr-1 block text-sm bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-2 border-b-4 border-green-700 hover:green-pink-500 rounded transition duration-300 transform hover:scale-105">Edit Retro</a>
-            </nav>
-            <div class="w-full flex h-full overflow-x-auto">
-                <div class="flex">
-                    {forEach sortedColumns $ renderColumn items}
-                    <div style="min-width: 18rem" class="w-72 m-2 rounded">
-                        <a href={pathTo $ NewRetroColumnAction retroId count} class="block rounded p-2 text-white bg-gray-800 hover:bg-gray-700 transition duration-300 font-bold">New Column</a>
-                    </div>
+        {nav}
+        <main class="w-full flex h-full overflow-x-auto">
+            <div class="flex">
+                {forEach sortedColumns $ renderColumn items}
+                <div style="min-width: 18rem" class="w-72 m-2 rounded">
+                    <a href={pathTo $ NewRetroColumnAction retroId count} class="block rounded p-2 text-white bg-gray-800 hover:bg-gray-700 transition duration-300 font-bold">New Column</a>
                 </div>
             </div>
         </main>

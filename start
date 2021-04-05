@@ -14,4 +14,4 @@ eval "$(direnv hook bash)"
 eval "$(direnv export bash)"
 
 # Finally start the dev server
-make tailwind-dev & RunDevServer
+make tailwind-dev & IHP_BROWSER=echo RunDevServer

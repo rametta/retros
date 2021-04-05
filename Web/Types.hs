@@ -2,7 +2,9 @@ module Web.Types where
 
 import IHP.Prelude
 import IHP.ModelSupport
+import IHP.LoginSupport.Types
 import Generated.Types
+
 
 data WebApplication = WebApplication deriving (Eq, Show)
 
@@ -50,3 +52,14 @@ data CommentsController
     | UpdateCommentAction { commentId :: !(Id Comment) }
     | DeleteCommentAction { commentId :: !(Id Comment) }
     deriving (Eq, Show, Data)
+
+data SessionsController
+    = NewSessionAction
+    | CreateSessionAction
+    | DeleteSessionAction
+    deriving (Eq, Show, Data)
+
+instance HasNewSessionUrl User where
+    newSessionUrl _ = "/NewSession"
+
+type instance CurrentUserRecord = User
