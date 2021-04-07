@@ -48,11 +48,20 @@ instance Controller TeamsController where
 
     action EditTeamAction { teamId } = do
         team <- fetch teamId
+        teamMembers <- query @TeamMember
+                            |> filterWhere (#teamId, teamId)
+                            |> fetch
+        users <- fetch $ map (get #userId) teamMembers
         setModal EditView { .. }
         jumpToAction $ ShowTeamAction teamId
 
     action UpdateTeamAction { teamId } = do
         team <- fetch teamId
+        teamMembers <- query @TeamMember
+                            |> filterWhere (#teamId, teamId)
+                            |> fetch
+        users <- fetch $ map (get #userId) teamMembers
+        
         team
             |> buildTeam
             |> ifValid \case
