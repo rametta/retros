@@ -9,8 +9,8 @@ Features:
 - Incremental DOM patching with [MorphDOM](https://github.com/patrick-steele-idem/morphdom)
 - Completely written in [Haskell](https://www.haskell.org/)
 - Styled with [Tailwind](https://tailwindcss.com/)
-- Authentication *(Coming soon)*
-- Teams *(Coming soon)*
+- Authentication
+- Multi Teams
 
 ![app screenshot](./screenshot.png)
 
