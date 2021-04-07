@@ -24,6 +24,9 @@ renderForm user = [hsx|
             <label for="password">Password</label>
             <input required id="password" name="password" type="password" placeholder="Password" />
         </div>
-        <button type="submit" class="btn-gray">Login</button>
+        <div class="flex items-center justify-between">
+            <button type="submit" class="btn-gray">Login</button>
+            <a href={NewUserAction} class="text-white hover:text-gray-500">Signup Instead?</a>
+        </div>
     </form>
 |]
