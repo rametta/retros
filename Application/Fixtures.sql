@@ -71,7 +71,6 @@ INSERT INTO public.items (id, column_id, title, description, created_at, updated
 INSERT INTO public.items (id, column_id, title, description, created_at, updated_at, sort_order, retro_id) VALUES ('ec0f1760-e914-45b3-a726-c900d3ebe238', 'cc513208-599c-4be0-bc1e-d5790875902c', 'Cat could sleep on lap more often', '', '2021-04-02 16:15:26.922106-04', '2021-04-02 16:15:26.922106-04', 0, '9451012f-7680-46f6-a09e-f8c44d2a2c95');
 INSERT INTO public.items (id, column_id, title, description, created_at, updated_at, sort_order, retro_id) VALUES ('2d5fe4cb-1824-4ee0-ba55-a8193339f04a', '9d9f3543-d6d2-4d57-868a-b6877ecddb33', 'Easter bunny for long weekend', '', '2021-04-02 16:16:13.434952-04', '2021-04-02 16:16:13.434952-04', 0, '9451012f-7680-46f6-a09e-f8c44d2a2c95');
 INSERT INTO public.items (id, column_id, title, description, created_at, updated_at, sort_order, retro_id) VALUES ('eb51ee10-8a80-4305-a2ec-71d3098f2fc8', 'd698e4d7-e610-4042-9091-42304ace7a5a', 'Add authentication', '', '2021-04-02 16:17:57.125966-04', '2021-04-02 16:17:57.125966-04', 1, '9451012f-7680-46f6-a09e-f8c44d2a2c95');
-INSERT INTO public.items (id, column_id, title, description, created_at, updated_at, sort_order, retro_id) VALUES ('a8c16faf-1813-4e17-bb07-64cf3df935b3', '92e0d894-0503-43aa-b010-58aa659aa79c', '\wed', '', '2021-04-02 17:02:47.734393-04', '2021-04-02 17:02:47.734393-04', 0, '8aa1c0eb-e0db-47e0-a69f-e2700746786a');
 INSERT INTO public.items (id, column_id, title, description, created_at, updated_at, sort_order, retro_id) VALUES ('e491f92b-1aa8-42e7-a902-34ac4546aa6d', '5f5a5576-0838-4a19-9554-069073396c6e', 'Shipped that awesome new feature everybody wanted!erf', '', '2021-04-02 16:12:12.618691-04', '2021-04-02 16:12:12.618691-04', 0, '9451012f-7680-46f6-a09e-f8c44d2a2c95');
 INSERT INTO public.items (id, column_id, title, description, created_at, updated_at, sort_order, retro_id) VALUES ('b82092ed-7251-4bbc-8ed8-c68e4125349d', '5f5a5576-0838-4a19-9554-069073396c6e', 'Live updates from postgres streamed to clients with websockets', '', '2021-04-02 16:14:34.800805-04', '2021-04-02 16:14:34.800805-04', 6, '9451012f-7680-46f6-a09e-f8c44d2a2c95');
 INSERT INTO public.items (id, column_id, title, description, created_at, updated_at, sort_order, retro_id) VALUES ('d975e66d-e0ed-4805-acc4-3d889a9ef463', 'd698e4d7-e610-4042-9091-42304ace7a5a', 'Add authorization', '', '2021-04-03 11:32:26.833082-04', '2021-04-03 11:32:26.833082-04', 1, '9451012f-7680-46f6-a09e-f8c44d2a2c95');
@@ -81,6 +80,7 @@ INSERT INTO public.items (id, column_id, title, description, created_at, updated
 INSERT INTO public.items (id, column_id, title, description, created_at, updated_at, sort_order, retro_id) VALUES ('fe895eec-2b48-43c9-a433-fbc3db70c1cb', 'd698e4d7-e610-4042-9091-42304ace7a5a', 'Add welcome page', '', '2021-04-03 11:33:29.154936-04', '2021-04-03 11:33:29.154936-04', 3, '9451012f-7680-46f6-a09e-f8c44d2a2c95');
 INSERT INTO public.items (id, column_id, title, description, created_at, updated_at, sort_order, retro_id) VALUES ('fa60cbdc-7df2-4627-b4a0-3fb1896c090d', 'd698e4d7-e610-4042-9091-42304ace7a5a', 'Add teams support', '', '2021-04-03 11:33:57.01878-04', '2021-04-03 11:33:57.01878-04', 4, '9451012f-7680-46f6-a09e-f8c44d2a2c95');
 INSERT INTO public.items (id, column_id, title, description, created_at, updated_at, sort_order, retro_id) VALUES ('2c640e84-81f7-4066-a413-949718cbfc96', '0c486392-35a0-4fdd-99fb-73ce820a6943', 'kuik', '', '2021-04-05 10:07:26.779518-04', '2021-04-05 10:07:26.779518-04', 0, 'df6707fb-8bdc-417b-86f8-2056bb9d6abd');
+INSERT INTO public.items (id, column_id, title, description, created_at, updated_at, sort_order, retro_id) VALUES ('a8c16faf-1813-4e17-bb07-64cf3df935b3', '92e0d894-0503-43aa-b010-58aa659aa79c', 'wed', '', '2021-04-02 17:02:47.734393-04', '2021-04-02 17:02:47.734393-04', 0, '8aa1c0eb-e0db-47e0-a69f-e2700746786a');
 
 
 ALTER TABLE public.items ENABLE TRIGGER ALL;
@@ -95,8 +95,16 @@ ALTER TABLE public.comments ENABLE TRIGGER ALL;
 
 ALTER TABLE public.users DISABLE TRIGGER ALL;
 
+INSERT INTO public.users (id, fullname, email, password_hash, locked_at, failed_login_attempts) VALUES ('f277f013-db16-497f-be80-9128f77c016c', 'Jason', 'rametta@outlook.com', 'sha256|17|X0Bf7boF72GUubh/Qphykw==|sVV1kQFWBVIFnO5jq3/YAtthGMdsCSLTA4ORegNR7ZE=', NULL, 0);
 
 
 ALTER TABLE public.users ENABLE TRIGGER ALL;
+
+
+ALTER TABLE public.teams DISABLE TRIGGER ALL;
+
+
+
+ALTER TABLE public.teams ENABLE TRIGGER ALL;
 
 
