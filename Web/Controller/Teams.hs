@@ -82,8 +82,11 @@ instance Controller TeamsController where
         let team = newRecord @Team
         team
             |> buildTeam
+            |> validateField #title nonEmpty
             |> ifValid \case
-                Left team -> render NewView { .. } 
+                Left team -> do
+                    setModal NewView { .. }
+                    jumpToAction TeamsAction
                 Right team -> do
                     team <- team |> createRecord
                     setSuccessMessage "Team created"

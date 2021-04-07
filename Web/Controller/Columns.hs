@@ -28,6 +28,7 @@ instance Controller ColumnsController where
         column <- fetch columnId
         column
             |> buildColumn
+            |> validateField #title nonEmpty
             |> ifValid \case
                 Left column -> render EditView { .. }
                 Right column -> do
@@ -39,6 +40,7 @@ instance Controller ColumnsController where
         let column = newRecord @Column
         column
             |> buildColumn
+            |> validateField #title nonEmpty
             |> ifValid \case
                 Left column -> render NewView { .. } 
                 Right column -> do

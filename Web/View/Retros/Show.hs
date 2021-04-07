@@ -64,11 +64,10 @@ renderColumn allItems column =
 
 renderItem :: Item -> Html
 renderItem item =
-    let
-        itemId = get #id item
-    in
     [hsx|
         <a href={EditItemAction itemId} class="block rounded shadow text-white bg-gray-700 hover:bg-gray-600 transition duration-200 p-2 my-2">
             {get #title item}
         </a>
     |]
+    where
+        itemId = get #id item

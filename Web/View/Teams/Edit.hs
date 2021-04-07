@@ -13,7 +13,7 @@ instance View EditView where
 
 renderForm :: Team -> [User] -> Html
 renderForm team users = formFor team [hsx|
-        {(textField #title) {autofocus = True, placeholder = "Jane Doe's Team"}}
+        {(textField #title) {autofocus = True, required = True, placeholder = "Jane Doe's Team"}}
         {(hiddenField #ownerId)}
         <div class="flex justify-between items-center">
             <label>Members</label>

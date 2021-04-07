@@ -13,7 +13,7 @@ instance View NewView where
 
 renderForm :: Retro -> Html
 renderForm retro = formFor retro [hsx|
-    {(textField #title) {autofocus = True}}
+    {(textField #title) {autofocus = True, required = True}}
     {(hiddenField #teamId)}
     <div class="flex justify-between">
         <div class="flex">

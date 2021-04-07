@@ -34,6 +34,7 @@ instance Controller RetrosController where
         retro <- fetch retroId
         retro
             |> buildRetro
+            |> validateField #title nonEmpty
             |> ifValid \case
                 Left retro -> render EditView { .. }
                 Right retro -> do
@@ -43,10 +44,12 @@ instance Controller RetrosController where
 
     action CreateRetroAction = do
         let retro = newRecord @Retro
+        let teamId = get #teamId retro
         retro
             |> buildRetro
+            |> validateField #title nonEmpty
             |> ifValid \case
-                Left retro -> render NewView { .. } 
+                Left retro -> render NewView { .. }
                 Right retro -> do
                     retro <- retro |> createRecord
                     setSuccessMessage "Retro created"

@@ -18,12 +18,12 @@ instance Controller TeamMembersController where
                     |> filterWhere (#email, email)
                     |> fetchOneOrNothing
 
-        let failure = do
+        let failure teamMember = do
                 setModal NewView { .. }
                 jumpToAction $ ShowTeamAction $ get #teamId teamMember
 
         case mUser of
-            Nothing -> failure
+            Nothing -> failure $ teamMember |> attachFailure #userId "No user with that email exists"
             Just user -> do
                 mExistingTeamMember <-
                     query @TeamMember
@@ -32,12 +32,12 @@ instance Controller TeamMembersController where
                         |> fetchOneOrNothing
 
                 case mExistingTeamMember of
-                    Just tm -> failure
+                    Just tm -> failure $ teamMember |> attachFailure #userId "User is already in this team"
                     Nothing -> 
                         teamMember
                             |> set #userId (get #id user)
                             |> ifValid \case
-                                Left teamMember -> failure
+                                Left teamMember -> failure teamMember
                                 Right teamMember -> do
                                     teamMember <- teamMember |> createRecord
                                     setSuccessMessage "TeamMember created"

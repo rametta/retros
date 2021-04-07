@@ -14,7 +14,7 @@ instance View NewView where
 renderForm :: Column -> Html
 renderForm column = formFor column [hsx|
     {(hiddenField #retroId)}
-    {(textField #title) {autofocus = True}}
+    {(textField #title) {autofocus = True, required = True}}
     {(textField #sortOrder) { fieldLabel = "Position", helpText = "Ex: A position of 0 would be the left most column" }}
     <div class="flex justify-between">
         <div class="flex">

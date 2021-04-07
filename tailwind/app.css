@@ -27,6 +27,10 @@
     @apply bg-gray-500 hover:bg-gray-600 text-white font-bold py-1 px-2 rounded transition duration-300;
 }
 
+.invalid-feedback {
+    @apply text-red-400 text-sm italic;
+}
+
 form > div {
     @apply mb-4;
 }
