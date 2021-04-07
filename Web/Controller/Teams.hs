@@ -6,9 +6,16 @@ import Web.View.Teams.New
 import Web.View.Teams.Edit
 import Web.View.Teams.Show
 import qualified Web.View.Retros.New as NewRetroView
+import qualified Web.View.TeamMembers.New as NewTeamMemberView
 
 instance Controller TeamsController where
     beforeAction = ensureIsUser
+
+    action NewTeamMemberAction { teamId } = do
+        let teamMember = newRecord @TeamMember
+                            |> set #teamId teamId
+        setModal NewTeamMemberView.NewView { .. }
+        jumpToAction $ ShowTeamAction $ get #teamId teamMember
 
     action TeamsAction = autoRefresh do
         teamMembers <- query @TeamMember
@@ -61,7 +68,7 @@ instance Controller TeamsController where
                             |> filterWhere (#teamId, teamId)
                             |> fetch
         users <- fetch $ map (get #userId) teamMembers
-        
+
         team
             |> buildTeam
             |> ifValid \case

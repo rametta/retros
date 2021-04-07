@@ -72,10 +72,16 @@ type instance CurrentUserRecord = User
 data TeamsController
     = TeamsAction
     | NewTeamAction
+    | NewTeamMemberAction { teamId :: !(Id Team) }
     | NewTeamRetroAction { teamId :: !(Id Team) }
     | ShowTeamAction { teamId :: !(Id Team) }
     | CreateTeamAction
     | EditTeamAction { teamId :: !(Id Team) }
     | UpdateTeamAction { teamId :: !(Id Team) }
     | DeleteTeamAction { teamId :: !(Id Team) }
+    deriving (Eq, Show, Data)
+
+data TeamMembersController
+    = CreateTeamMemberAction
+    | DeleteTeamMemberAction { teamId :: !(Id Team), userId :: !(Id User) }
     deriving (Eq, Show, Data)

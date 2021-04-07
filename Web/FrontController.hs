@@ -6,6 +6,7 @@ import Web.Controller.Prelude
 import Web.View.Layout (defaultLayout)
 
 -- Controller Imports
+import Web.Controller.TeamMembers
 import Web.Controller.Teams
 import Web.Controller.Users
 import Web.Controller.Comments
@@ -19,6 +20,7 @@ instance FrontController WebApplication where
         [ startPage TeamsAction 
         , parseRoute @SessionsController
         -- Generator Marker
+        , parseRoute @TeamMembersController
         , parseRoute @TeamsController
         , parseRoute @UsersController
         , parseRoute @CommentsController

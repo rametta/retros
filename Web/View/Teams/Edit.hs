@@ -17,7 +17,7 @@ renderForm team users = formFor team [hsx|
         {(hiddenField #ownerId)}
         <div class="flex justify-between items-center">
             <label>Members</label>
-            <a class="block btn-gray text-xs">Add Member</a>
+            <a href={NewTeamMemberAction $ get #id team} class="block btn-gray text-xs">Add Member</a>
         </div>
         {usersOrEmpty}
         <div class="flex justify-between">
@@ -33,13 +33,27 @@ renderForm team users = formFor team [hsx|
         usersOrEmpty =
             case length users of
                 0 -> [hsx|
-                        <div class="text-gray-400">There are no users in this team yet. Add some!</div>
+                        <div class="text-gray-400">There are no members in this team yet. Add some!</div>
                     |]
-                _ -> forEach users renderUser
+                _ -> forEach users $ renderUser team
 
 
-renderUser :: User -> Html
-renderUser user =
+renderUser :: Team -> User -> Html
+renderUser team user =
     [hsx|
-        <div>{get #fullname user}</div>
+        <div class="flex text-white justify-between items-center bg-gray-600 py-1 px-2 text-sm rounded">
+            <span>
+                <span class="font-bold">{get #fullname user}</span> - <span class="italic">({get #email user})</span> {label}
+            </span>
+            <a class="js-delete bg-red-500 hover:bg-red-400 px-1 rounded transition duration-300" href={DeleteTeamMemberAction teamId userId}>Remove</a>
+        </div>
     |]
+    where
+        teamId = get #id team
+        ownerId = get #ownerId team
+        userId = get #id user
+        label :: String
+        label = if ownerId == userId then
+                    "(Team Owner)"
+                else
+                    ""
