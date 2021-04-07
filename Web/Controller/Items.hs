@@ -1,18 +1,12 @@
 module Web.Controller.Items where
 
 import Web.Controller.Prelude
-import Web.View.Items.Index
 import Web.View.Items.New
 import Web.View.Items.Edit
-import Web.View.Items.Show
 import Web.Controller.Retros
 
 instance Controller ItemsController where
     beforeAction = ensureIsUser
-    
-    action ItemsAction = do
-        items <- query @Item |> fetch
-        render IndexView { .. }
 
     action NewItemAction = do
         let item = newRecord
@@ -26,10 +20,6 @@ instance Controller ItemsController where
 
         setModal NewView { .. }
         jumpToAction $ ShowRetroAction retroId
-
-    action ShowItemAction { itemId } = do
-        item <- fetch itemId
-        render ShowView { .. }
 
     action EditItemAction { itemId } = do
         item <- fetch itemId

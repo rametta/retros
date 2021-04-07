@@ -5,6 +5,8 @@ import Web.View.TeamMembers.New
 import Web.Controller.Teams
 
 instance Controller TeamMembersController where
+    beforeAction = ensureIsUser
+    
     action CreateTeamMemberAction = do
         let email = param @Text "email"
         let teamId = param @(Id Team) "teamId"

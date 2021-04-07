@@ -20,10 +20,8 @@ data RetrosController
     deriving (Eq, Show, Data)
 
 data ColumnsController
-    = ColumnsAction
-    | NewColumnAction
+    = NewColumnAction
     | NewRetroColumnAction { retroId :: !(Id Retro), sortOrder :: Int }
-    | ShowColumnAction { columnId :: !(Id Column) }
     | CreateColumnAction
     | EditColumnAction { columnId :: !(Id Column) }
     | UpdateColumnAction { columnId :: !(Id Column) }
@@ -31,10 +29,8 @@ data ColumnsController
     deriving (Eq, Show, Data)
 
 data ItemsController
-    = ItemsAction
-    | NewItemAction
+    = NewItemAction
     | NewColumnItemAction { retroId :: !(Id Retro), columnId :: !(Id Column), sortOrder :: Int }
-    | ShowItemAction { itemId :: !(Id Item) }
     | CreateItemAction
     | EditItemAction { itemId :: !(Id Item) }
     | UpdateItemAction { itemId :: !(Id Item) }
