@@ -22,7 +22,7 @@ renderNavbar mTeamId afterLogo beforSessionBtn =
     homeBtn :: Html
     homeBtn =
       case mTeamId of
-        Just teamId -> [hsx|<a href={ShowTeamAction teamId} class="mr-2 block bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-2 rounded transition duration-300">Retros</a>|]
+        Just teamId -> [hsx|<a href={ShowTeamAction teamId} class="mr-2 block bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-2 rounded transition duration-300">Team Retros</a>|]
         Nothing -> [hsx|<a href={TeamsAction} class="mr-2 block bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-2 rounded transition duration-300">Teams</a>|]
 
     loginLogoutButton :: Html

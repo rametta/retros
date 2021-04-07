@@ -11,7 +11,18 @@ instance Controller TeamsController where
     beforeAction = ensureIsUser
 
     action TeamsAction = autoRefresh do
-        teams <- query @Team |> fetch
+        teamMembers <- query @TeamMember
+                    |> filterWhere (#userId, currentUserId)
+                    |> fetch
+
+        inTeams <- fetch $ map (get #teamId) teamMembers
+
+        ownedTeams <- query @Team
+            |> filterWhere (#ownerId, currentUserId)
+            |> fetch
+
+        let teams = nub $ inTeams ++ ownedTeams
+        
         render IndexView { .. }
 
     action NewTeamAction = do
@@ -27,7 +38,7 @@ instance Controller TeamsController where
         setModal NewRetroView.NewView { .. }
         jumpToAction $ ShowTeamAction teamId
 
-    action ShowTeamAction { teamId } = do
+    action ShowTeamAction { teamId } = autoRefresh do
         team <- fetch teamId
         retros <- query @Retro
                     |> filterWhere (#teamId, teamId)
@@ -37,7 +48,8 @@ instance Controller TeamsController where
 
     action EditTeamAction { teamId } = do
         team <- fetch teamId
-        render EditView { .. }
+        setModal EditView { .. }
+        jumpToAction $ ShowTeamAction teamId
 
     action UpdateTeamAction { teamId } = do
         team <- fetch teamId
@@ -48,7 +60,7 @@ instance Controller TeamsController where
                 Right team -> do
                     team <- team |> updateRecord
                     setSuccessMessage "Team updated"
-                    redirectTo EditTeamAction { .. }
+                    redirectTo ShowTeamAction { .. }
 
     action CreateTeamAction = do
         let team = newRecord @Team

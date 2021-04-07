@@ -12,7 +12,7 @@ instance View IndexView where
                     <div class="flex justify-between">
                         <h1 class="text-2xl text-white font-bold mb-3">Your Teams</h1>
                         <div>
-                            <a href={pathTo NewTeamAction} class="bg-green-400 hover:bg-green-300 text-white font-bold py-1 px-2 border-b-4 border-green-700 hover:border-green-500 rounded transition duration-300 transform hover:scale-105">New Team</a>
+                            <a href={pathTo NewTeamAction} class="bg-green-400 hover:bg-green-300 text-white font-bold py-1 px-2 rounded transition duration-300">New Team</a>
                         </div>
                     </div>
                     {renderTeamsOrEmpty}
@@ -21,6 +21,7 @@ instance View IndexView where
         |]
         where
             sortedTeams = teams |> sortOn (get #createdAt) |> reverse
+
             renderTeamsOrEmpty :: Html
             renderTeamsOrEmpty = case length sortedTeams of
                     0 -> [hsx|<span class="text-white text-center bg-gray-800 rounded p-3">You have not created or not part of any teams yet</span>|]
