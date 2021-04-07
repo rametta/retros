@@ -4,7 +4,7 @@ import IHP.AuthSupport.View.Sessions.New
 
 instance View (NewView User) where
     html NewView { .. } = [hsx|
-        {renderNavbar mempty mempty}
+        {renderNavbar Nothing mempty mempty}
         <main class="w-100">
             <div class="mx-auto max-w-sm mb-5 bg-gray-800 rounded p-3 mt-12">
                 <h5 class="text-xl text-white font-bold mb-3">Login</h5>

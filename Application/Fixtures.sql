@@ -14,12 +14,24 @@ SET row_security = off;
 
 SET SESSION AUTHORIZATION DEFAULT;
 
+ALTER TABLE public.users DISABLE TRIGGER ALL;
+
+INSERT INTO public.users (id, fullname, email, password_hash, locked_at, failed_login_attempts) VALUES ('f277f013-db16-497f-be80-9128f77c016c', 'Jason', 'rametta@outlook.com', 'sha256|17|X0Bf7boF72GUubh/Qphykw==|sVV1kQFWBVIFnO5jq3/YAtthGMdsCSLTA4ORegNR7ZE=', NULL, 0);
+
+
+ALTER TABLE public.users ENABLE TRIGGER ALL;
+
+
+ALTER TABLE public.teams DISABLE TRIGGER ALL;
+
+INSERT INTO public.teams (id, title, created_at, owner_id) VALUES ('c263a0c3-d122-4114-9b07-099d9e184020', 'Jason''s Team', '2021-04-07 12:24:52.609421-04', 'f277f013-db16-497f-be80-9128f77c016c');
+
+
+ALTER TABLE public.teams ENABLE TRIGGER ALL;
+
+
 ALTER TABLE public.retros DISABLE TRIGGER ALL;
 
-INSERT INTO public.retros (id, created_at, updated_at, title) VALUES ('74c64289-9838-4c7f-9e58-5e7264554e0f', '2021-03-31 13:51:02.031623-04', '2021-03-31 13:51:02.031623-04', 'Unity Game Growth Retro 4');
-INSERT INTO public.retros (id, created_at, updated_at, title) VALUES ('8aa1c0eb-e0db-47e0-a69f-e2700746786a', '2021-04-02 17:02:42.527014-04', '2021-04-02 17:02:42.527014-04', 'asjdasd');
-INSERT INTO public.retros (id, created_at, updated_at, title) VALUES ('9451012f-7680-46f6-a09e-f8c44d2a2c95', '2021-04-02 16:10:25.354931-04', '2021-04-02 16:10:25.354931-04', 'Super Awesome Team Retro');
-INSERT INTO public.retros (id, created_at, updated_at, title) VALUES ('df6707fb-8bdc-417b-86f8-2056bb9d6abd', '2021-04-03 10:33:54.493603-04', '2021-04-03 10:33:54.493603-04', 'ytj');
 
 
 ALTER TABLE public.retros ENABLE TRIGGER ALL;
@@ -93,18 +105,10 @@ ALTER TABLE public.comments DISABLE TRIGGER ALL;
 ALTER TABLE public.comments ENABLE TRIGGER ALL;
 
 
-ALTER TABLE public.users DISABLE TRIGGER ALL;
-
-INSERT INTO public.users (id, fullname, email, password_hash, locked_at, failed_login_attempts) VALUES ('f277f013-db16-497f-be80-9128f77c016c', 'Jason', 'rametta@outlook.com', 'sha256|17|X0Bf7boF72GUubh/Qphykw==|sVV1kQFWBVIFnO5jq3/YAtthGMdsCSLTA4ORegNR7ZE=', NULL, 0);
-
-
-ALTER TABLE public.users ENABLE TRIGGER ALL;
-
-
-ALTER TABLE public.teams DISABLE TRIGGER ALL;
+ALTER TABLE public.team_members DISABLE TRIGGER ALL;
 
 
 
-ALTER TABLE public.teams ENABLE TRIGGER ALL;
+ALTER TABLE public.team_members ENABLE TRIGGER ALL;
 
 

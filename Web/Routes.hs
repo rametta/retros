@@ -12,3 +12,6 @@ instance AutoRoute CommentsController
 instance AutoRoute SessionsController
 instance AutoRoute UsersController
 
+
+instance AutoRoute TeamsController
+

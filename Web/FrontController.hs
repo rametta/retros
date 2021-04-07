@@ -6,6 +6,7 @@ import Web.Controller.Prelude
 import Web.View.Layout (defaultLayout)
 
 -- Controller Imports
+import Web.Controller.Teams
 import Web.Controller.Users
 import Web.Controller.Comments
 import Web.Controller.Items
@@ -15,9 +16,10 @@ import Web.Controller.Static
 import Web.Controller.Sessions
 instance FrontController WebApplication where
     controllers = 
-        [ startPage RetrosAction 
+        [ startPage TeamsAction 
         , parseRoute @SessionsController
         -- Generator Marker
+        , parseRoute @TeamsController
         , parseRoute @UsersController
         , parseRoute @CommentsController
         , parseRoute @ItemsController

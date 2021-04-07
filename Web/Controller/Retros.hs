@@ -1,22 +1,12 @@
 module Web.Controller.Retros where
 
 import Web.Controller.Prelude
-import Web.View.Retros.Index
 import Web.View.Retros.New
 import Web.View.Retros.Edit
 import Web.View.Retros.Show
 
 instance Controller RetrosController where
     beforeAction = ensureIsUser
-    
-    action RetrosAction = autoRefresh do
-        retros <- query @Retro |> fetch
-        render IndexView { .. }
-
-    action NewRetroAction = do
-        let retro = newRecord
-        setModal NewView { .. }
-        jumpToAction RetrosAction
 
     action ShowRetroAction { retroId } = autoRefresh do
         retro <- fetch retroId
@@ -66,7 +56,7 @@ instance Controller RetrosController where
         retro <- fetch retroId
         deleteRecord retro
         setSuccessMessage "Retro deleted"
-        redirectTo RetrosAction
+        redirectTo $ ShowTeamAction $ get #teamId retro
 
 buildRetro retro = retro
-    |> fill @'["title"]
+    |> fill @'["title", "teamId"]

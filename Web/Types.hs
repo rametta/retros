@@ -12,9 +12,7 @@ data WebApplication = WebApplication deriving (Eq, Show)
 data StaticController = WelcomeAction deriving (Eq, Show, Data)
 
 data RetrosController
-    = RetrosAction
-    | NewRetroAction
-    | ShowRetroAction { retroId :: !(Id Retro) }
+    = ShowRetroAction { retroId :: !(Id Retro) }
     | CreateRetroAction
     | EditRetroAction { retroId :: !(Id Retro) }
     | UpdateRetroAction { retroId :: !(Id Retro) }
@@ -70,3 +68,14 @@ instance HasNewSessionUrl User where
     newSessionUrl _ = "/NewSession"
 
 type instance CurrentUserRecord = User
+
+data TeamsController
+    = TeamsAction
+    | NewTeamAction
+    | NewTeamRetroAction { teamId :: !(Id Team) }
+    | ShowTeamAction { teamId :: !(Id Team) }
+    | CreateTeamAction
+    | EditTeamAction { teamId :: !(Id Team) }
+    | UpdateTeamAction { teamId :: !(Id Team) }
+    | DeleteTeamAction { teamId :: !(Id Team) }
+    deriving (Eq, Show, Data)

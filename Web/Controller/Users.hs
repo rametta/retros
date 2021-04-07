@@ -40,7 +40,7 @@ instance Controller UsersController where
                     user <- user
                         |> set #passwordHash hashed
                         |> createRecord
-                    redirectTo RetrosAction
+                    redirectTo TeamsAction
 
 buildUser user = user
     |> fill @["email", "fullname","passwordHash"]

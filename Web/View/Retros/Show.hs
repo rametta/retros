@@ -12,6 +12,7 @@ data ShowView = ShowView {
 instance View ShowView where
     html ShowView { .. } =
         let
+            teamId = Just $ get #teamId retro
             retroId = get #id retro
             sortedColumns = columns |> sortOn (get #sortOrder)
             count = length columns
@@ -21,7 +22,7 @@ instance View ShowView where
                 </div>
             |]
             editBtn = [hsx|<a href={pathTo $ EditRetroAction retroId} class="block bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-2 rounded transition duration-300">Edit Retro</a>|]
-            nav = renderNavbar title editBtn
+            nav = renderNavbar teamId title editBtn
         in
         [hsx|
         {nav}
