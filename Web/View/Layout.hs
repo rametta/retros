@@ -13,10 +13,8 @@ defaultLayout :: Html -> Html
 defaultLayout inner = H.docTypeHtml ! A.lang "en" $ [hsx|
 <head>
     {metaTags}
-
     {stylesheets}
     {scripts}
-
     <title>Retros</title>
 </head>
 <body class="flex flex-col h-screen bg-gray-900">
@@ -26,12 +24,17 @@ defaultLayout inner = H.docTypeHtml ! A.lang "en" $ [hsx|
 |]
 
 stylesheets :: Html
-stylesheets = [hsx|
+stylesheets = do
+    when isDevelopment [hsx|
         <link rel="stylesheet" href="/app.css"/>
+    |]
+    when isProduction [hsx|
+        <link rel="stylesheet" href="/prod.css"/>
     |]
 
 scripts :: Html
-scripts = [hsx|
+scripts = do
+    when isDevelopment [hsx|
         <script id="livereload-script" src="/livereload.js"></script>
         <script src="/vendor/morphdom-umd.min.js"></script>
         <script src="/vendor/turbolinks.js"></script>
@@ -39,6 +42,9 @@ scripts = [hsx|
         <script src="/vendor/turbolinksMorphdom.js"></script>
         <script src="/helpers.js"></script>
         <script src="/ihp-auto-refresh.js"></script>
+    |]
+    when isProduction [hsx|
+        <script src="/prod.js"></script>
     |]
 
 metaTags :: Html
