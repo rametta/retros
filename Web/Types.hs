@@ -58,6 +58,7 @@ data UsersController
     | CreateUserAction
     | EditUserAction { userId :: !(Id User) }
     | UpdateUserAction { userId :: !(Id User) }
+    | UsersAction
     deriving (Eq, Show, Data)
 
 instance HasNewSessionUrl User where

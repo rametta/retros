@@ -3,8 +3,13 @@ module Web.Controller.Users where
 import Web.Controller.Prelude
 import Web.View.Users.New
 import Web.View.Users.Edit
+import Web.View.Users.Index
 
 instance Controller UsersController where
+    action UsersAction = do
+        users <- query @User |> fetch
+        render IndexView { .. }
+
     action NewUserAction = do
         let user = newRecord
         render NewView { .. }
