@@ -45,6 +45,7 @@ scripts = do
     |]
     when isProduction [hsx|
         <script src="/prod.js"></script>
+        <script src="/ihp-auto-refresh.js"></script>
     |]
 
 metaTags :: Html
