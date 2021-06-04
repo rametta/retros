@@ -1,30 +1,30 @@
 module Web.View.Retros.Show where
-import Web.View.Prelude
-import GHC.Base (Semigroup)
 
-data ShowView = ShowView {
-    retro :: Retro,
+import GHC.Base (Semigroup)
+import Web.View.Prelude
+
+data ShowView = ShowView
+  { retro :: Retro,
     columns :: [Column],
     items :: [Item],
     comments :: [Comment]
-}
+  }
 
 instance View ShowView where
-    html ShowView { .. } =
-        let
-            teamId = Just $ get #teamId retro
-            retroId = get #id retro
-            sortedColumns = columns |> sortOn (get #sortOrder)
-            count = length columns
-            title = [hsx|
+  html ShowView {..} =
+    let teamId = Just $ get #teamId retro
+        retroId = get #id retro
+        sortedColumns = columns |> sortOn (get #sortOrder)
+        count = length columns
+        title =
+          [hsx|
                 <div class="bg-gray-700 rounded py-1 px-2">
                     <h1 class="font-bold text-white">{get #title retro}</h1>
                 </div>
             |]
-            editBtn = [hsx|<a href={pathTo $ EditRetroAction retroId} class="block bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-2 rounded transition duration-300">Edit Retro</a>|]
-            nav = renderNavbar teamId title editBtn
-        in
-        [hsx|
+        editBtn = [hsx|<a href={pathTo $ EditRetroAction retroId} class="block bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-2 rounded transition duration-300">Edit Retro</a>|]
+        nav = renderNavbar teamId title editBtn
+     in [hsx|
         {nav}
         <main class="w-full flex h-full overflow-x-auto">
             <div class="flex">
@@ -36,16 +36,20 @@ instance View ShowView where
         </main>
         |]
 
-renderColumn :: [Item] -> Column ->  Html
+renderColumn :: [Item] -> Column -> Html
 renderColumn allItems column =
-    let
-        retroId = get #retroId column
-        columnId = get #id column
-        items = allItems
-                    |> filter ((== columnId) . get #columnId)
-                    |> sortOn (get #sortOrder)
-    in
-    [hsx|
+  let retroId = get #retroId column
+      columnId = get #id column
+      items =
+        allItems
+          |> filter ((== columnId) . get #columnId)
+          |> sortOn (get #sortOrder)
+
+      columnCover = case get #cover column of
+        Just "" -> mempty
+        Just url -> [hsx|<img src={url} class="w-full h-40 object-cover shadow mt-2 rounded border border-gray-700 text-white italic" alt="cover" />|]
+        Nothing -> mempty
+   in [hsx|
     <div style="min-width: 18rem" class="p-2 w-72 m-2 rounded bg-gray-800 flex flex-col justify-between">
         <div class="flex justify-between">
             <h2 class="text-2xl text-white font-bold">{get #title column}</h2>
@@ -54,6 +58,7 @@ renderColumn allItems column =
             </div>
         </div>
         <div class="flex-grow overflow-auto">
+            {columnCover}
             {forEach items renderItem}
         </div>
         <div>
@@ -64,10 +69,10 @@ renderColumn allItems column =
 
 renderItem :: Item -> Html
 renderItem item =
-    [hsx|
+  [hsx|
         <a href={EditItemAction itemId} class="block rounded shadow text-white bg-gray-700 hover:bg-gray-600 transition duration-200 p-2 my-2">
             {get #title item}
         </a>
     |]
-    where
-        itemId = get #id item
+  where
+    itemId = get #id item

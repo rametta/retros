@@ -15,10 +15,12 @@ instance Controller UsersController where
         render NewView { .. }
 
     action EditUserAction { userId } = do
+        accessDeniedUnless (userId == currentUserId)
         user <- fetch userId
         render EditView { .. }
 
     action UpdateUserAction { userId } = do
+        accessDeniedUnless (userId == currentUserId)
         user <- fetch userId
         user
             |> buildUser

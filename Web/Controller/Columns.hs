@@ -55,4 +55,4 @@ instance Controller ColumnsController where
         redirectTo $ ShowRetroAction (get #retroId column)
 
 buildColumn column = column
-    |> fill @["title","retroId","sortOrder"]
+    |> fill @["title","cover","retroId","sortOrder"]

@@ -1,7 +1,7 @@
 module.exports = {
   purge: {
       mode: "all",
-      content: ["./Web/View/**/*.hs", "./assets/**/*.css"],
+      content: ["./Web/View/**/*.hs", "./Application/Helper/**/*.hs" , "./assets/**/*.css"],
   },
   darkMode: false, // or 'media' or 'class'
   theme: {

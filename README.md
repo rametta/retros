@@ -15,3 +15,9 @@ Features:
 ![app screenshot](./screenshot.png)
 
 Made with :heart: and [IHP](https://github.com/digitallyinduced/ihp).
+
+### Development
+
+- Run `./start` to start the local dev server.
+- Dev server available at `localhost:8000`
+- Dev server tools available at `localhost:8001`
