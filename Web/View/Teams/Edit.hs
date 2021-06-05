@@ -27,10 +27,21 @@ renderForm team users owner = formFor team [hsx|
                 <button class="mr-2 bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-2 rounded transition duration-300">Save</button>
                 <a href={ShowTeamAction $ get #id team} class="block btn-gray">Cancel</a>
             </div>
-            <a href={DeleteTeamAction $ get #id team} class="js-delete block bg-red-500 hover:bg-red-400 text-white font-bold py-1 px-2 rounded transition duration-300">Delete Team</a>
+            {deleteBtn}
         </div>
     |]
     where
+        deleteBtn :: Html
+        deleteBtn =
+            if get #ownerId team == get #id currentUser  then
+                [hsx|
+                    <a href={DeleteTeamAction $ get #id team} class="js-delete block bg-red-500 hover:bg-red-400 text-white font-bold py-1 px-2 rounded transition duration-300">Delete Team</a>
+                |]
+            else
+                [hsx|
+                    <button disabled title="Only the team owner can delete the team" class="block cursor-not-allowed bg-red-400 text-white font-bold py-1 px-2 rounded transition duration-300">Delete Team</button>
+                |]
+
         usersOrEmpty :: Html
         usersOrEmpty =
             case users of

@@ -96,8 +96,10 @@ instance Controller TeamsController where
 
     action DeleteTeamAction { teamId } = do
         team <- fetch teamId
-        deleteRecord team
-        setSuccessMessage "Team deleted"
+        if get #ownerId team == currentUserId then
+            deleteRecord team
+        else
+            pure ()
         redirectTo TeamsAction
 
 buildTeam team = team
