@@ -20,6 +20,17 @@ defaultLayout inner = H.docTypeHtml ! A.lang "en" $ [hsx|
 <body class="flex flex-col h-screen bg-gray-900">
     {inner}
     {modal}
+    <script>
+    document.onkeydown = function(evt) {
+        evt = evt || window.event;
+        if (evt.keyCode == 27) {
+            var backdrop = document.getElementById('modal-backdrop')
+            if (backdrop) {
+                backdrop.click()
+            }
+        }
+    };
+    </script>
 </body>
 |]
 
