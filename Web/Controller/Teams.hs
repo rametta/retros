@@ -55,6 +55,7 @@ instance Controller TeamsController where
 
     action EditTeamAction { teamId } = do
         team <- fetch teamId
+        owner <- fetch $ get #ownerId team
         teamMembers <- query @TeamMember
                             |> filterWhere (#teamId, teamId)
                             |> fetch
@@ -64,6 +65,7 @@ instance Controller TeamsController where
 
     action UpdateTeamAction { teamId } = do
         team <- fetch teamId
+        owner <- fetch $ get #ownerId team
         teamMembers <- query @TeamMember
                             |> filterWhere (#teamId, teamId)
                             |> fetch

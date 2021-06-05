@@ -1,20 +1,22 @@
 module Web.View.Teams.Edit where
 import Web.View.Prelude
 
-data EditView = EditView { team :: Team, users :: [User] }
+data EditView = EditView { team :: Team, users :: [User], owner :: User }
 
 instance View EditView where
     html EditView { .. } = renderModal Modal
         { modalTitle = "Edit Team"
         , modalCloseUrl = pathTo $ ShowTeamAction $ get #id team
         , modalFooter = Nothing
-        , modalContent = renderForm team users
+        , modalContent = renderForm team users owner
         }
 
-renderForm :: Team -> [User] -> Html
-renderForm team users = formFor team [hsx|
+renderForm :: Team -> [User] -> User -> Html
+renderForm team users owner = formFor team [hsx|
+        <div class="mt-2"></div>
         {(textField #title) {autofocus = True, required = True, placeholder = "Jane Doe's Team"}}
         {(hiddenField #ownerId)}
+        <div class=" text-white text-sm">Team Owner: <strong>{get #fullname owner}</strong> - <span class="italic">({get #email owner})</span></div>
         <div class="flex justify-between items-center">
             <label>Members</label>
             <a href={NewTeamMemberAction $ get #id team} class="block btn-gray text-xs">Add Member</a>
@@ -31,8 +33,8 @@ renderForm team users = formFor team [hsx|
     where
         usersOrEmpty :: Html
         usersOrEmpty =
-            case length users of
-                0 -> [hsx|
+            case users of
+                [] -> [hsx|
                         <div class="text-gray-400">There are no members in this team yet. Add some!</div>
                     |]
                 _ -> forEach users $ renderUser team

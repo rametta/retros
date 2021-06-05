@@ -16,9 +16,9 @@ instance View NewView where
 
 renderForm :: User -> Html
 renderForm user = formFor user [hsx|
-    {(textField #fullname) {fieldLabel = "Name", placeholder = "Jane Doe", autofocus = True}}
-    {(emailField #email) {fieldLabel = "E-Mail", placeholder = "JaneDoe@gmail.com"}}
-    {(passwordField #passwordHash){fieldLabel = "Password", placeholder = "Password"}}
+    {(textField #fullname) {fieldLabel = "Name", placeholder = "Jane Doe", required = True, autofocus = True}}
+    {(emailField #email) {fieldLabel = "E-Mail", placeholder = "JaneDoe@gmail.com", required = True}}
+    {(passwordField #passwordHash){fieldLabel = "Password", placeholder = "Password", required = True}}
     <div class="flex items-center justify-between">
         <button type="submit" class="btn-gray">Signup</button>
         <a href={NewSessionAction} class="text-white hover:text-gray-500">Login Instead?</a>
