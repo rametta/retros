@@ -11,10 +11,5 @@ instance AutoRoute ItemsController
 instance AutoRoute CommentsController
 instance AutoRoute SessionsController
 instance AutoRoute UsersController
-
-
 instance AutoRoute TeamsController
-
-
 instance AutoRoute TeamMembersController
-

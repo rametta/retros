@@ -23,7 +23,8 @@ CREATE TABLE items (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
     sort_order INT DEFAULT 0 NOT NULL,
-    retro_id UUID NOT NULL
+    retro_id UUID NOT NULL,
+    upvotes UUID[] DEFAULT '{}' NOT NULL
 );
 CREATE TABLE comments (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,

@@ -21,3 +21,4 @@ Made with :heart: and [IHP](https://github.com/digitallyinduced/ihp).
 - Run `./start` to start the local dev server.
 - Dev server available at `localhost:8000`
 - Dev server tools available at `localhost:8001`
+- Enter into a nix shell if you need: `nix-shell`

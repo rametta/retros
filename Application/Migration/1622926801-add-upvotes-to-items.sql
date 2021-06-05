@@ -1,0 +1,2 @@
+ALTER TABLE items
+ADD COLUMN upvotes UUID[] NOT NULL DEFAULT '{}';
