@@ -70,9 +70,16 @@ renderColumn allItems column =
 renderItem :: Item -> Html
 renderItem item =
   [hsx|
-        <a href={EditItemAction itemId} class="block rounded shadow text-white bg-gray-700 hover:bg-gray-600 transition duration-200 p-2 my-2">
+        <a href={EditItemAction itemId} class="rounded shadow text-white bg-gray-700 hover:bg-gray-600 transition duration-200 p-2 my-2 flex justify-between items-start">
             {get #title item}
+            {upvotesHtml}
         </a>
     |]
   where
     itemId = get #id item
+    upvotes = get #upvotes item
+
+    upvotesHtml :: Html
+    upvotesHtml = case upvotes of
+                [] -> mempty
+                _ -> [hsx|<strong class="bg-green-500 px-2 rounded-full text-sm">+{length upvotes}</strong>|]
