@@ -45,6 +45,16 @@ instance Controller TeamsController where
 
     action ShowTeamAction { teamId } = autoRefresh do
         team <- fetch teamId
+
+        members <- query @TeamMember
+            |> filterWhere (#teamId, teamId)
+            |> fetch
+
+        let ownerId = get #ownerId team
+        let memberIds = map (get #userId) members 
+
+        accessDeniedUnless $ currentUserId `elem` (memberIds ++ [ownerId])
+
         retros <- query @Retro
                     |> filterWhere (#teamId, teamId)
                     |> fetch
