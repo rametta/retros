@@ -55,4 +55,4 @@ instance Controller ItemsController where
         redirectTo $ ShowRetroAction (get #retroId item)
 
 buildItem item = item
-    |> fill @["columnId","retroId","title","description","sortOrder"]
+    |> fill @["columnId","retroId","upvotes","title","description","sortOrder"]

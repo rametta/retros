@@ -17,6 +17,7 @@ renderForm item = formFor item [hsx|
     {(hiddenField #columnId) {required = True}}
     {(textField #title) {required = True, autofocus = True}}
     {(hiddenField #description)}
+    {(hiddenField #upvotes)}
     {(hiddenField #sortOrder)}
     <div class="flex flex-wrap justify-between">
         <div class="flex">
