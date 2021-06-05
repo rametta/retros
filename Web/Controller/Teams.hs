@@ -27,8 +27,6 @@ instance Controller TeamsController where
         ownedTeams <- query @Team
             |> filterWhere (#ownerId, currentUserId)
             |> fetch
-
-        let teams = nub $ inTeams ++ ownedTeams
         
         render IndexView { .. }
 
