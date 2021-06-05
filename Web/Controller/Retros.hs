@@ -11,6 +11,19 @@ instance Controller RetrosController where
     action ShowRetroAction { retroId } = autoRefresh do
         retro <- fetch retroId
 
+        let teamId = get #teamId retro
+
+        team <- fetch teamId
+
+        members <- query @TeamMember
+                    |> filterWhere (#teamId, teamId)
+                    |> fetch
+
+        let ownerId = get #ownerId team
+        let memberIds = map (get #userId) members 
+
+        accessDeniedUnless $ currentUserId `elem` (memberIds ++ [ownerId])
+
         columns <- query @Column
                     |> filterWhere (#retroId, retroId)
                     |> fetch
