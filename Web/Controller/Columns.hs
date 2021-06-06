@@ -42,6 +42,7 @@ instance Controller ColumnsController where
         column
             |> buildColumn
             |> validateField #title nonEmpty
+            |> emptyValueToNothing #cover
             |> ifValid \case
                 Left column -> render NewView { .. } 
                 Right column -> do
