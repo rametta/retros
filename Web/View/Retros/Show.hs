@@ -46,7 +46,6 @@ renderColumn allItems column =
           |> sortOn (get #sortOrder)
 
       columnCover = case get #cover column of
-        Just "" -> mempty
         Just url -> [hsx|<img src={url} class="w-full h-40 object-cover shadow mt-2 rounded border border-gray-700 text-white italic" alt="cover" />|]
         Nothing -> mempty
    in [hsx|
@@ -82,4 +81,4 @@ renderItem item =
     upvotesHtml :: Html
     upvotesHtml = case upvotes of
                 [] -> mempty
-                _ -> [hsx|<strong class="bg-green-500 px-2 rounded-full text-sm">+{length upvotes}</strong>|]
+                _ -> [hsx|<strong class="bg-green-500 px-2 rounded-full text-sm text-white">+{length upvotes}</strong>|]

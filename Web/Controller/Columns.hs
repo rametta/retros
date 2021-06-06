@@ -29,6 +29,7 @@ instance Controller ColumnsController where
         column
             |> buildColumn
             |> validateField #title nonEmpty
+            |> emptyValueToNothing #cover
             |> ifValid \case
                 Left column -> render EditView { .. }
                 Right column -> do
