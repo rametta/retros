@@ -48,7 +48,7 @@ instance Controller ItemsController where
     action UpdateItemAction { itemId } = do
         item <- fetch itemId
         item
-            |> buildItem
+            |> fill @["columnId","retroId","title","description","sortOrder"]
             |> ifValid \case
                 Left item -> render EditView { .. }
                 Right item -> do
