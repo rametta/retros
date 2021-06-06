@@ -40,7 +40,7 @@ stylesheets = do
         <link rel="stylesheet" href="/app.css"/>
     |]
     when isProduction [hsx|
-        <link rel="stylesheet" href="/prod.css"/>
+        <link rel="stylesheet" href={assetPath "/prod.css"}/>
     |]
 
 scripts :: Html
@@ -55,7 +55,7 @@ scripts = do
         <script src="/ihp-auto-refresh.js"></script>
     |]
     when isProduction [hsx|
-        <script src="/prod.js"></script>
+        <script src={assetPath "/prod.js"}></script>
         <script src="/ihp-auto-refresh.js"></script>
     |]
 
