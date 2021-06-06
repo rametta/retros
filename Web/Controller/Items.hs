@@ -21,7 +21,26 @@ instance Controller ItemsController where
         setModal NewView { .. }
         jumpToAction $ ShowRetroAction retroId
 
-    action EditItemAction { itemId } = do
+    action UpvoteAction { itemId, retroId } = do
+        item <- fetch itemId
+
+        let upvotesIds = (map Id . get #upvotes) item
+
+        let newUpvotes = if currentUserId `elem` upvotesIds then
+                            filter (/= currentUserId) upvotesIds
+                         else
+                            upvotesIds ++ [currentUserId]
+
+        let newUpvotesUUID = map unpack newUpvotes
+
+        result <- sqlQuery "UPDATE public.items SET upvotes = ?::UUID[] WHERE id = ? RETURNING *" (newUpvotesUUID, itemId)
+
+        let item :: Item = fromMaybe (newRecord @Item) $ head result
+
+        setModal EditView { .. }
+        jumpToAction $ ShowRetroAction retroId
+
+    action EditItemAction { itemId } = autoRefresh do
         item <- fetch itemId
         setModal EditView { .. }
         jumpToAction $ ShowRetroAction (get #retroId item)

@@ -7,8 +7,18 @@ instance View EditView where
         { modalTitle = "Edit"
         , modalCloseUrl = pathTo $ ShowRetroAction $ get #retroId item
         , modalFooter = Nothing
-        , modalContent = renderForm item
+        , modalContent = renderForms item
         }
+
+renderForms :: Item -> Html
+renderForms item = [hsx|
+        {renderForm item}
+        <form action={UpvoteAction (get #id item) (get #retroId item)} method="POST">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded transition duration-300">Upvote: {length upvotes}</button>
+        </form>
+    |]
+    where
+        upvotes = get #upvotes item
 
 renderForm :: Item -> Html
 renderForm item = formFor item [hsx|
@@ -17,7 +27,6 @@ renderForm item = formFor item [hsx|
     {(textField #title) {required = True, autofocus = True}}
     {(hiddenField #description)}
     {(hiddenField #upvotes)}
-    {(hiddenField #sortOrder)}
     <div class="flex justify-between">
         <div class="flex">
             <button class="mr-2 bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-2 rounded transition duration-300">Save</button>

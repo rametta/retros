@@ -35,6 +35,7 @@ data ItemsController
     | EditItemAction { itemId :: !(Id Item) }
     | UpdateItemAction { itemId :: !(Id Item) }
     | DeleteItemAction { itemId :: !(Id Item) }
+    | UpvoteAction { itemId :: !(Id Item), retroId :: !(Id Retro) }
     deriving (Eq, Show, Data)
 
 data CommentsController
