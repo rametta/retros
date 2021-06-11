@@ -6,8 +6,7 @@ import Web.View.Prelude
 data ShowView = ShowView
   { retro :: Retro,
     columns :: [Column],
-    items :: [Item],
-    comments :: [Comment]
+    items :: [Item]
   }
 
 instance View ShowView where

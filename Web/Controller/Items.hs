@@ -17,6 +17,7 @@ instance Controller ItemsController where
                     |> set #retroId retroId
                     |> set #columnId columnId
                     |> set #sortOrder sortOrder
+                    |> set #createdBy (Just currentUserId)
 
         setModal NewView { .. }
         jumpToAction $ ShowRetroAction retroId
@@ -37,11 +38,14 @@ instance Controller ItemsController where
 
         let item :: Item = fromMaybe (newRecord @Item) $ head result
 
+        createdBy <- fetchOneOrNothing $ get #createdBy item
+
         setModal EditView { .. }
         jumpToAction $ ShowRetroAction retroId
 
     action EditItemAction { itemId } = autoRefresh do
         item <- fetch itemId
+        createdBy <- fetchOneOrNothing $ get #createdBy item
         setModal EditView { .. }
         jumpToAction $ ShowRetroAction (get #retroId item)
 
@@ -50,10 +54,11 @@ instance Controller ItemsController where
         item
             |> fill @["columnId","retroId","title","description","sortOrder"]
             |> ifValid \case
-                Left item -> render EditView { .. }
+                Left item -> do
+                    createdBy <- fetchOneOrNothing $ get #createdBy item
+                    render EditView { .. }
                 Right item -> do
                     item <- item |> updateRecord
-                    setSuccessMessage "Item updated"
                     redirectTo $ ShowRetroAction (get #retroId item)
 
     action CreateItemAction = do
@@ -64,14 +69,12 @@ instance Controller ItemsController where
                 Left item -> render NewView { .. } 
                 Right item -> do
                     item <- item |> createRecord
-                    setSuccessMessage "Item created"
                     redirectTo $ ShowRetroAction (get #retroId item)
 
     action DeleteItemAction { itemId } = do
         item <- fetch itemId
         deleteRecord item
-        setSuccessMessage "Item deleted"
         redirectTo $ ShowRetroAction (get #retroId item)
 
 buildItem item = item
-    |> fill @["columnId","retroId","upvotes","title","description","sortOrder"]
+    |> fill @["columnId","retroId","createdBy","upvotes","title","description","sortOrder"]

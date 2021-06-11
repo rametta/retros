@@ -20,9 +20,10 @@ instance Controller RetrosController where
                     |> fetch
 
         let ownerId = get #ownerId team
-        let memberIds = map (get #userId) members 
+        let memberIds = map (get #userId) members
+        let memberAndOwnerIds = memberIds ++ [ownerId]
 
-        accessDeniedUnless $ currentUserId `elem` (memberIds ++ [ownerId])
+        accessDeniedUnless $ currentUserId `elem` memberAndOwnerIds
 
         columns <- query @Column
                     |> filterWhere (#retroId, retroId)
@@ -31,10 +32,6 @@ instance Controller RetrosController where
         items <- query @Item
                     |> filterWhere (#retroId, retroId)
                     |> fetch
-
-        comments <- query @Comment
-                        |> filterWhere (#retroId, retroId)
-                        |> fetch
             
         render ShowView { .. }
 

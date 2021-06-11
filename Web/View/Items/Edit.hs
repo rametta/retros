@@ -1,24 +1,36 @@
 module Web.View.Items.Edit where
 import Web.View.Prelude
 
-newtype EditView = EditView { item :: Item }
+data EditView = EditView
+    { item :: Item
+    , createdBy :: Maybe User
+    }
 instance View EditView where
     html EditView { .. } = renderModal Modal
         { modalTitle = "Edit"
         , modalCloseUrl = pathTo $ ShowRetroAction $ get #retroId item
         , modalFooter = Nothing
-        , modalContent = renderForms item
+        , modalContent = renderForms item createdBy
         }
 
-renderForms :: Item -> Html
-renderForms item = [hsx|
+renderForms :: Item -> Maybe User -> Html
+renderForms item createdBy = [hsx|
         {renderForm item}
-        <form action={UpvoteAction (get #id item) (get #retroId item)} method="POST">
-            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded transition duration-300">Upvote: {length upvotes}</button>
-        </form>
+        <div class="flex justify-between items-end">
+            <form action={UpvoteAction (get #id item) (get #retroId item)} method="POST">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded transition duration-300">Upvote: {length upvotes}</button>
+            </form>
+            {createdByHtml}
+        </div>
     |]
     where
         upvotes = get #upvotes item
+
+        createdByHtml :: Html
+        createdByHtml =
+            case createdBy of
+                Just user -> [hsx|<span class="text-gray-300 text-sm">Created By: <strong>{get #fullname user}</strong></span>|]
+                Nothing -> mempty
 
 renderForm :: Item -> Html
 renderForm item = formFor item [hsx|

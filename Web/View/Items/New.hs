@@ -19,6 +19,7 @@ renderForm item = formFor item [hsx|
     {(hiddenField #description)}
     {(hiddenField #upvotes)}
     {(hiddenField #sortOrder)}
+    {(hiddenField #createdBy)}
     <div class="flex flex-wrap justify-between">
         <div class="flex">
             <button class="mr-2 bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-2 rounded transition duration-300">Save</button>
