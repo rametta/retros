@@ -1,0 +1,2 @@
+ALTER TABLE items
+ADD COLUMN created_by UUID DEFAULT NULL;
