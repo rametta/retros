@@ -24,7 +24,8 @@ CREATE TABLE items (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
     sort_order INT DEFAULT 0 NOT NULL,
     retro_id UUID NOT NULL,
-    upvotes UUID[] DEFAULT '{}' NOT NULL
+    upvotes UUID[] DEFAULT '{}' NOT NULL,
+    created_by UUID DEFAULT NULL
 );
 CREATE TABLE comments (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
@@ -58,6 +59,7 @@ ALTER TABLE columns ADD CONSTRAINT columns_ref_retro_id FOREIGN KEY (retro_id) R
 ALTER TABLE comments ADD CONSTRAINT comments_ref_item_id FOREIGN KEY (item_id) REFERENCES items (id) ON DELETE CASCADE;
 ALTER TABLE comments ADD CONSTRAINT comments_ref_retro_id FOREIGN KEY (retro_id) REFERENCES retros (id) ON DELETE CASCADE;
 ALTER TABLE items ADD CONSTRAINT items_ref_column_id FOREIGN KEY (column_id) REFERENCES columns (id) ON DELETE CASCADE;
+ALTER TABLE items ADD CONSTRAINT items_ref_created_by FOREIGN KEY (created_by) REFERENCES users (id) ON DELETE NO ACTION;
 ALTER TABLE items ADD CONSTRAINT items_ref_retro_id FOREIGN KEY (retro_id) REFERENCES retros (id) ON DELETE CASCADE;
 ALTER TABLE retros ADD CONSTRAINT retros_ref_team_id FOREIGN KEY (team_id) REFERENCES teams (id) ON DELETE CASCADE;
 ALTER TABLE team_members ADD CONSTRAINT team_members_ref_team_id FOREIGN KEY (team_id) REFERENCES teams (id) ON DELETE CASCADE;
