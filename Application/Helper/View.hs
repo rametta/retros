@@ -7,12 +7,12 @@ import Web.Controller.Prelude
 renderNavbar :: AutoRoute SessionsController => AutoRoute TeamsController => Maybe (Id Team) -> Html -> Html -> Html
 renderNavbar mTeamId afterLogo beforSessionBtn =
   [hsx|
-    <nav class="flex items-center justify-between flex-wrap bg-gray-800 p-2">
-      <div class="flex items-center">
+    <nav class="flex items-center justify-between flex-wrap bg-gray-800 px-2 py-1">
+      <div class="flex items-center py-1">
         {homeBtn}
         {afterLogo}
       </div>
-      <div class="flex items-center">
+      <div class="flex items-center py-1">
         {beforSessionBtn}
         {loginLogoutButton}
       </div>

@@ -4,6 +4,7 @@ import Web.Controller.Prelude
 import Web.View.Retros.New
 import Web.View.Retros.Edit
 import Web.View.Retros.Show
+import qualified Data.UUID
 
 instance Controller RetrosController where
     beforeAction = ensureIsUser
@@ -70,6 +71,25 @@ instance Controller RetrosController where
         deleteRecord retro
         setSuccessMessage "Retro deleted"
         redirectTo $ ShowTeamAction $ get #teamId retro
+
+    action MoveColumnToRetroAction { columnId, currentRetroId } = do
+        let column = newRecord @Column |> fill @'["retroId"]
+        let retroId = get #retroId column
+
+        if unpack retroId /= Data.UUID.nil then
+            withTransaction do
+                column <- fetch columnId
+
+                column
+                    |> set #retroId retroId
+                    |> updateRecord
+
+                result :: [Item] <- sqlQuery "UPDATE items SET retro_id = ? WHERE column_id = ? RETURNING *" (retroId, columnId)
+                pure ()
+        else
+            pure ()
+
+        redirectTo $ ShowRetroAction currentRetroId
 
 buildRetro retro = retro
     |> fill @'["title", "teamId"]

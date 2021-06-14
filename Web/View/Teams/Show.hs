@@ -28,8 +28,8 @@ instance View ShowView where
             sortedRetros = retros |> sortOn (get #createdAt) |> reverse
 
             renderRetrosOrEmpty :: Html
-            renderRetrosOrEmpty = case length sortedRetros of
-                    0 -> [hsx|<span class="text-white text-center bg-gray-800 rounded p-3">This team has no Retro's yet. Create one!</span>|]
+            renderRetrosOrEmpty = case sortedRetros of
+                    [] -> [hsx|<span class="text-white text-center bg-gray-800 rounded p-3">This team has no Retro's yet. Create one!</span>|]
                     _ -> forEach sortedRetros renderRetro
 
 renderRetro :: Retro -> Html

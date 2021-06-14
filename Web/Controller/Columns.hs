@@ -3,6 +3,7 @@ module Web.Controller.Columns where
 import Web.Controller.Prelude
 import Web.View.Columns.New
 import Web.View.Columns.Edit
+import Web.View.Columns.Move
 import Web.Controller.Retros
 
 instance Controller ColumnsController where
@@ -55,6 +56,14 @@ instance Controller ColumnsController where
         deleteRecord column
         setSuccessMessage "Column deleted"
         redirectTo $ ShowRetroAction (get #retroId column)
+
+    action ShowMoveColumnAction { columnId } = do
+        column <- fetch columnId
+        retro <- fetch $ get #retroId column
+        team <- fetch $ get #teamId retro
+        retros <- query @Retro |> filterWhere (#teamId, get #id team) |> fetch
+        setModal MoveView { .. }
+        jumpToAction $ ShowRetroAction (get #id retro)
 
 buildColumn column = column
     |> fill @["title","cover","retroId","sortOrder"]

@@ -5,6 +5,7 @@ data EditView = EditView
     { item :: Item
     , createdBy :: Maybe User
     }
+
 instance View EditView where
     html EditView { .. } = renderModal Modal
         { modalTitle = "Edit"

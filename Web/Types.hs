@@ -17,6 +17,7 @@ data RetrosController
     | EditRetroAction { retroId :: !(Id Retro) }
     | UpdateRetroAction { retroId :: !(Id Retro) }
     | DeleteRetroAction { retroId :: !(Id Retro) }
+    | MoveColumnToRetroAction { columnId :: !(Id Column), currentRetroId :: !(Id Retro) }
     deriving (Eq, Show, Data)
 
 data ColumnsController
@@ -26,6 +27,7 @@ data ColumnsController
     | EditColumnAction { columnId :: !(Id Column) }
     | UpdateColumnAction { columnId :: !(Id Column) }
     | DeleteColumnAction { columnId :: !(Id Column) }
+    | ShowMoveColumnAction { columnId :: !(Id Column) }
     deriving (Eq, Show, Data)
 
 data ItemsController
