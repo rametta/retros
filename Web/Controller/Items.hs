@@ -12,6 +12,21 @@ instance Controller ItemsController where
         let item = newRecord
         render NewView { .. }
 
+    action DropAction { itemId } = do
+        let columnId = Id (param @UUID "columnId")
+
+        item <- fetch itemId
+        columnItemsCount <- query @Item
+                                |> filterWhere (#columnId, columnId)
+                                |> fetchCount
+        
+        item
+            |> set #columnId columnId
+            |> set #sortOrder (columnItemsCount + 1)
+            |> updateRecord
+
+        renderPlain "success"
+
     action NewColumnItemAction { retroId, columnId, sortOrder } = do
         let item = newRecord
                     |> set #retroId retroId

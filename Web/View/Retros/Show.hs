@@ -33,6 +33,7 @@ instance View ShowView where
                 </div>
             </div>
         </main>
+        <script src={assetPath "/dragAndDrop.js"}></script>
         |]
 
 renderColumn :: [Item] -> Column -> Html
@@ -55,7 +56,7 @@ renderColumn allItems column =
                 <a href={EditColumnAction columnId} class="bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-2 text-sm rounded transition duration-300">Edit</a>
             </div>
         </div>
-        <div class="flex-grow overflow-auto">
+        <div class="flex-grow overflow-auto" data-column-id={tshow columnId} ondragover="onDragOver(event);" ondrop="onDrop(event, this);">
             {columnCover}
             {forEach items renderItem}
         </div>
@@ -68,11 +69,11 @@ renderColumn allItems column =
 renderItem :: Item -> Html
 renderItem item =
   [hsx|
-        <a href={EditItemAction itemId} class="rounded shadow text-white bg-gray-700 hover:bg-gray-600 transition duration-200 p-2 my-2 flex justify-between items-start">
-            {get #title item}
-            {upvotesHtml}
-        </a>
-    |]
+    <a data-drop-post-url={pathTo $ DropAction itemId} id={tshow itemId} ondragstart="onDragStart(event);" href={EditItemAction itemId} class="rounded shadow text-white bg-gray-700 hover:bg-gray-600 transition duration-200 p-2 my-2 flex justify-between items-start border-2 border-gray-700">
+        {get #title item}
+        {upvotesHtml}
+    </a>
+  |]
   where
     itemId = get #id item
     upvotes = get #upvotes item
