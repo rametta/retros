@@ -84,7 +84,8 @@ instance Controller RetrosController where
                     |> set #retroId retroId
                     |> updateRecord
 
-                result :: [Item] <- sqlQuery "UPDATE items SET retro_id = ? WHERE column_id = ? RETURNING *" (retroId, columnId)
+                _ :: [Item] <- sqlQuery "UPDATE items SET retro_id = ? WHERE column_id = ? RETURNING *" (retroId, columnId)
+                _ :: [Comment] <- sqlQuery "UPDATE comments SET retro_id = ? WHERE retro_id = ? RETURNING *" (retroId, currentRetroId)
                 pure ()
         else
             pure ()

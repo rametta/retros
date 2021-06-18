@@ -33,7 +33,8 @@ CREATE TABLE comments (
     title TEXT NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
-    retro_id UUID NOT NULL
+    retro_id UUID NOT NULL,
+    created_by UUID NOT NULL
 );
 CREATE TABLE users (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
@@ -56,6 +57,7 @@ CREATE TABLE team_members (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
 );
 ALTER TABLE columns ADD CONSTRAINT columns_ref_retro_id FOREIGN KEY (retro_id) REFERENCES retros (id) ON DELETE CASCADE;
+ALTER TABLE comments ADD CONSTRAINT comments_ref_created_by FOREIGN KEY (created_by) REFERENCES users (id) ON DELETE NO ACTION;
 ALTER TABLE comments ADD CONSTRAINT comments_ref_item_id FOREIGN KEY (item_id) REFERENCES items (id) ON DELETE CASCADE;
 ALTER TABLE comments ADD CONSTRAINT comments_ref_retro_id FOREIGN KEY (retro_id) REFERENCES retros (id) ON DELETE CASCADE;
 ALTER TABLE items ADD CONSTRAINT items_ref_column_id FOREIGN KEY (column_id) REFERENCES columns (id) ON DELETE CASCADE;

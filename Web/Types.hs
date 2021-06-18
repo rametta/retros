@@ -42,12 +42,7 @@ data ItemsController
     deriving (Eq, Show, Data)
 
 data CommentsController
-    = CommentsAction
-    | NewCommentAction
-    | ShowCommentAction { commentId :: !(Id Comment) }
-    | CreateCommentAction
-    | EditCommentAction { commentId :: !(Id Comment) }
-    | UpdateCommentAction { commentId :: !(Id Comment) }
+    = CreateCommentAction { itemId :: !(Id Item), retroId :: !(Id Retro) }
     | DeleteCommentAction { commentId :: !(Id Comment) }
     deriving (Eq, Show, Data)
 

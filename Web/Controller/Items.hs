@@ -1,5 +1,6 @@
 module Web.Controller.Items where
 
+import Data.Map (fromList)
 import Web.Controller.Prelude
 import Web.View.Items.New
 import Web.View.Items.Edit
@@ -49,18 +50,19 @@ instance Controller ItemsController where
 
         let newUpvotesUUID = map unpack newUpvotes
 
-        result <- sqlQuery "UPDATE public.items SET upvotes = ?::UUID[] WHERE id = ? RETURNING *" (newUpvotesUUID, itemId)
-
-        let item :: Item = fromMaybe (newRecord @Item) $ head result
-
-        createdBy <- fetchOneOrNothing $ get #createdBy item
-
-        setModal EditView { .. }
-        jumpToAction $ ShowRetroAction retroId
+        item |> set #upvotes newUpvotesUUID |> updateRecord
+        redirectTo $ EditItemAction itemId
 
     action EditItemAction { itemId } = autoRefresh do
         item <- fetch itemId
         createdBy <- fetchOneOrNothing $ get #createdBy item
+        comments <- query @Comment
+            |> filterWhere (#itemId, itemId)
+            |> orderByAsc #createdAt
+            |> fetch
+        let unqiueCommentUserIds = nub $ map (get #createdBy) comments
+        users <- fetch unqiueCommentUserIds
+        let usersMap :: Map (Id User) User = fromList (map (\u -> (get #id u, u)) users)
         setModal EditView { .. }
         jumpToAction $ ShowRetroAction (get #retroId item)
 
@@ -70,8 +72,7 @@ instance Controller ItemsController where
             |> fill @["columnId","retroId","title","description","sortOrder"]
             |> ifValid \case
                 Left item -> do
-                    createdBy <- fetchOneOrNothing $ get #createdBy item
-                    render EditView { .. }
+                    redirectTo $ EditItemAction itemId
                 Right item -> do
                     item <- item |> updateRecord
                     redirectTo $ ShowRetroAction (get #retroId item)

@@ -1,57 +1,33 @@
 module Web.Controller.Comments where
 
+import Data.Text
 import Web.Controller.Prelude
-import Web.View.Comments.Index
-import Web.View.Comments.New
-import Web.View.Comments.Edit
-import Web.View.Comments.Show
+import Web.Controller.Items
 
 instance Controller CommentsController where
     beforeAction = ensureIsUser
-    
-    action CommentsAction = do
-        comments <- query @Comment |> fetch
-        render IndexView { .. }
 
-    action NewCommentAction = do
-        let comment = newRecord
-        render NewView { .. }
+    action CreateCommentAction { itemId, retroId } = do
+        let title = strip $ param @Text "comment-title"
 
-    action ShowCommentAction { commentId } = do
-        comment <- fetch commentId
-        render ShowView { .. }
+        case title of
+            "" -> redirectTo $ EditItemAction itemId
+            _ -> do
+                newRecord @Comment
+                    |> set #title title
+                    |> set #createdBy currentUserId
+                    |> set #itemId itemId
+                    |> set #retroId retroId
+                    |> createRecord
 
-    action EditCommentAction { commentId } = do
-        comment <- fetch commentId
-        render EditView { .. }
-
-    action UpdateCommentAction { commentId } = do
-        comment <- fetch commentId
-        comment
-            |> buildComment
-            |> ifValid \case
-                Left comment -> render EditView { .. }
-                Right comment -> do
-                    comment <- comment |> updateRecord
-                    setSuccessMessage "Comment updated"
-                    redirectTo EditCommentAction { .. }
-
-    action CreateCommentAction = do
-        let comment = newRecord @Comment
-        comment
-            |> buildComment
-            |> ifValid \case
-                Left comment -> render NewView { .. } 
-                Right comment -> do
-                    comment <- comment |> createRecord
-                    setSuccessMessage "Comment created"
-                    redirectTo CommentsAction
+                redirectTo $ EditItemAction itemId
 
     action DeleteCommentAction { commentId } = do
         comment <- fetch commentId
+        -- only the comment creator can delete the comment
+        accessDeniedUnless $ get #createdBy comment == currentUserId
         deleteRecord comment
-        setSuccessMessage "Comment deleted"
-        redirectTo CommentsAction
+        redirectTo $ EditItemAction (get #itemId comment)
 
 buildComment comment = comment
     |> fill @["itemId","title"]
