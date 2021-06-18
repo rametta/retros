@@ -19,7 +19,7 @@ Tech Features:
 - Completely written in [Haskell](https://www.haskell.org/)
 - Styled with [Tailwind](https://tailwindcss.com/)
 
-![app screenshot](./screenshot.png)
+![app screenshot](./screenshot2.png)
 
 Made with :heart:, haskell, and [IHP](https://github.com/digitallyinduced/ihp).
 
