@@ -18,3 +18,5 @@ del
 static/prod.*
 Config/client_session_key.aes
 static/app.css
+# Ignore locally checked out IHP version
+IHP

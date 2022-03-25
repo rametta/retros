@@ -76,7 +76,7 @@ instance Controller RetrosController where
         let column = newRecord @Column |> fill @'["retroId"]
         let retroId = get #retroId column
 
-        if unpack retroId /= Data.UUID.nil then
+        if unpackId retroId /= Data.UUID.nil then
             withTransaction do
                 column <- fetch columnId
 

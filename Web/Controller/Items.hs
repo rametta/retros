@@ -48,7 +48,7 @@ instance Controller ItemsController where
                          else
                             upvotesIds ++ [currentUserId]
 
-        let newUpvotesUUID = map unpack newUpvotes
+        let newUpvotesUUID = map unpackId newUpvotes
 
         item |> set #upvotes newUpvotesUUID |> updateRecord
         redirectTo $ EditItemAction itemId
